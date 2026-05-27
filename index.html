@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>סרטים מומלצים לקראת המסע לפולין</title>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold:       #c8a96e;
+            --gold-light: #f0e0b0;
+            --strip-w:    30px;
+        }
+
+        body {
+            font-family: 'Heebo', Arial, sans-serif;
+            background: #0c0a06;
+            color: var(--gold-light);
+            direction: rtl;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== FIXED BACKGROUND ===== */
+        .bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: #100d08;
+            overflow: hidden;
+        }
+
+        /* Photo elements — full size, positioned absolutely */
+        .bg img {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 70%;
+            object-fit: cover;
+            filter: sepia(0.85) brightness(0.45) contrast(1.2) saturate(0.8);
+        }
+
+        .bg img.left {
+            left: 0;
+            object-position: center center;
+            -webkit-mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
+            mask-image:         linear-gradient(to right, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
+        }
+
+        .bg img.right {
+            right: 0;
+            object-position: center center;
+            -webkit-mask-image: linear-gradient(to left, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
+            mask-image:         linear-gradient(to left, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
+        }
+
+        /* Atmospheric overlays */
+        .bg-top {
+            position: absolute;
+            inset: 0;
+            background:
+                /* strong top dark */
+                linear-gradient(to bottom,  rgba(5,3,1,0.90) 0%, rgba(5,3,1,0.15) 22%, transparent 42%),
+                /* strong bottom dark */
+                linear-gradient(to top,     rgba(5,3,1,0.92) 0%, rgba(5,3,1,0.15) 20%, transparent 38%),
+                /* warm centre glow */
+                radial-gradient(ellipse 65% 50% at 50% 33%, rgba(200,155,65,0.075) 0%, transparent 70%),
+                /* left edge */
+                linear-gradient(to right, rgba(5,3,1,0.55) 0%, transparent 15%),
+                /* right edge */
+                linear-gradient(to left,  rgba(5,3,1,0.55) 0%, transparent 15%);
+        }
+
+        /* film-grain */
+        .bg-grain {
+            position: absolute; inset: 0;
+            opacity: 0.045;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
+            background-size: 220px 220px;
+        }
+
+        /* ===== FILM STRIPS ===== */
+        /*
+          Tile is 30×38 px.
+          Strip body: #28200e  (visible warm dark)
+          Hole fill:  #090705  (darker — creates "real hole" look)
+          Edge lines: thin gold
+        */
+        .strip {
+            position: fixed;
+            top: 0; bottom: 0;
+            width: var(--strip-w);
+            z-index: 30;
+            background-color: #241e0c;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='38'%3E%3Crect width='30' height='38' fill='%23241e0c'/%3E%3Crect x='0' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='28.5' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='5' y='8' width='20' height='16' rx='3' fill='%23090705' stroke='%23312610' stroke-width='1'/%3E%3C/svg%3E");
+            background-size: 30px 38px;
+            background-repeat: repeat-y;
+        }
+        .strip.left  { left:0;  box-shadow:  4px 0 18px rgba(0,0,0,0.95); }
+        .strip.right { right:0; box-shadow: -4px 0 18px rgba(0,0,0,0.95); }
+
+        /* ===== PAGE CONTENT ===== */
+        .page {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 46px calc(var(--strip-w) + 18px) 72px;
+        }
+
+        /* Header */
+        .header { text-align: center; margin-bottom: 30px; }
+
+        .star {
+            display: block;
+            color: var(--gold);
+            font-size: 30px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 28px rgba(200,169,110,0.55);
+        }
+
+        .rule {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+            max-width: 290px;
+            margin: 0 auto 14px;
+        }
+
+        .diamond {
+            display: block;
+            color: var(--gold);
+            font-size: 10px;
+            opacity: 0.65;
+            margin: 5px auto;
+        }
+
+        h1 {
+            font-family: 'Frank Ruhl Libre', Georgia, serif;
+            font-size: clamp(30px, 9vw, 58px);
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--gold-light);
+            text-shadow:
+                0 2px 8px rgba(0,0,0,0.97),
+                0 0 50px rgba(200,169,110,0.13);
+            letter-spacing: 1.5px;
+        }
+
+        .subtitle {
+            margin-top: 14px;
+            font-size: clamp(12px, 3.2vw, 14px);
+            color: #7a6040;
+            line-height: 1.9;
+        }
+
+        /* Film cards */
+        .films { display: flex; flex-direction: column; gap: 8px; }
+
+        .card {
+            background: rgba(6,4,2,0.74);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(200,169,110,0.2);
+            border-radius: 13px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            transition: background .2s, border-color .2s;
+        }
+        .card:hover {
+            background: rgba(200,169,110,0.07);
+            border-color: rgba(200,169,110,0.48);
+        }
+
+        .ico {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            background: rgba(200,169,110,0.09);
+            border: 1px solid rgba(200,169,110,0.38);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .title {
+            flex: 1;
+            font-size: clamp(13px, 3.6vw, 17px);
+            font-weight: 700;
+            color: var(--gold-light);
+            line-height: 1.25;
+        }
+
+        .btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+        button {
+            font-family: 'Heebo', Arial, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 13px;
+            border-radius: 7px;
+            cursor: pointer;
+            border: 1px solid;
+            transition: all .15s;
+        }
+
+        .btn-t { background: transparent; border-color: rgba(200,169,110,0.42); color: var(--gold); }
+        .btn-t:hover { background: rgba(200,169,110,0.1); border-color: var(--gold); }
+
+        .btn-w { background: rgba(200,169,110,0.15); border-color: var(--gold); color: var(--gold-light); }
+        .btn-w:hover { background: rgba(200,169,110,0.3); }
+
+        .ornament { text-align: center; margin-top: 34px; color: var(--gold); opacity: 0.28; font-size: 26px; }
+
+        @media (max-width: 440px) {
+            :root { --strip-w: 20px; }
+            button { padding: 5px 9px; font-size: 10px; }
+            .ico { width: 36px; height: 36px; font-size: 15px; }
+        }
+        @media (max-width: 330px) {
+            :root { --strip-w: 0px; }
+            .strip { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg" aria-hidden="true">
+    <!--
+        Using <img> elements directly — browsers load these more reliably than CSS background-image.
+        onerror hides the element silently; the warm CSS gradient fallback takes over.
+        Birkenau gate (left) + Krakow/Kazimierz street (right).
+    -->
+    <img class="left"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Auschwitz_II_snow.jpg/1280px-Auschwitz_II_snow.jpg"
+         alt=""
+         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/4/4f/Auschwitz_II_snow.jpg';this.onerror=function(){this.style.display='none'}">
+
+    <img class="right"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG/1280px-Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG"
+         alt=""
+         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/94/Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG';this.onerror=function(){this.style.display='none'}">
+
+    <div class="bg-top"></div>
+    <div class="bg-grain"></div>
+</div>
+
+<!-- Film strips -->
+<div class="strip left"  aria-hidden="true"></div>
+<div class="strip right" aria-hidden="true"></div>
+
+<!-- Content -->
+<div class="page">
+
+    <header class="header">
+        <span class="star">✡</span>
+        <div class="rule"></div>
+        <h1>סרטים מומלצים<br>לקראת המסע לפולין</h1>
+        <span class="diamond">◆</span>
+        <div class="rule" style="margin-top:4px"></div>
+        <p class="subtitle">
+            סרטים מעוררי מחשבה לקראת המסע —<br>
+            סיפורי זיכרון, הישרדות, בחירה,<br>
+            התנגדות ואנושיות
+        </p>
+    </header>
+
+    <div class="films" id="films"></div>
+    <div class="ornament">❧</div>
+
+</div>
+
+<script>
+const films = [
+    { name:'רשימת שינדלר',           ico:'🎩', t:'https://www.youtube.com/watch?v=mxphAlJID9U&t=8s',             w:'https://drive.google.com/file/d/1HtdUwqDCokp9jwZOMCuzPPvj6qJ9Vk7-/preview' },
+    { name:'הפסנתרן',                 ico:'🎹', t:'https://www.youtube.com/watch?v=BFwGqLa_oAo',                  w:'https://drive.google.com/file/d/10-Pcwo2EThYKgEOhjfI8dYUWdrza4UTi/preview' },
+    { name:'החיים יפים',              ico:'🚲', t:'https://www.youtube.com/watch?v=pAYEQP8gx3w',                  w:'https://drive.google.com/file/d/1Bh31za3olzsa7pyajUzOGX5fZPx3lPDW/preview' },
+    { name:'אירופה אירופה',           ico:'✡️', t:'https://www.youtube.com/watch?v=JqMBNCo7LPE',                  w:'https://drive.google.com/file/d/18PCSnHCFHcAFQJsWl8UHYfIvrWksZ-lC/preview' },
+    { name:'הבריחה מסוביבור',         ico:'🏃', t:'https://www.youtube.com/watch?v=loyfIoYNmWA',                  w:'https://www.youtube.com/watch?v=k1HmdVqZpRk' },
+    { name:'התנגדות',                 ico:'✊', t:'https://www.youtube.com/watch?v=7APcuF5nNfQ',                  w:'https://drive.google.com/file/d/1s-fs7o7uXfTycIqYwL1DGXqnFZp4yPxo/preview' },
+    { name:'הזייפנים',                ico:'✒️', t:'https://www.youtube.com/watch?v=oM8DhS78oZc',                  w:'https://drive.google.com/file/d/1QT3BiB8JC1c9DX_VPtWeXAEXcNfNYRJk/preview' },
+    { name:'התקוממות',                ico:'🔥', t:'https://www.youtube.com/watch?v=OoCU2gd_2b0',                  w:'https://drive.google.com/file/d/19h6VR4flPFA9_3QXvQ8vDCZqG99edHXL/preview' },
+    { name:'אשתו של שומר גן החיות',  ico:'🐾', t:'https://youtu.be/rJNFeHHGGN4?si=sU4DDVMd3CJrTGw8',            w:'https://drive.google.com/file/d/1XsysxK17PH1JbvXHSONJt8h92pqNKA4g/preview' },
+    { name:'הנפילה',                  ico:'🏛️', t:'https://www.youtube.com/watch?v=2XiY1ldtWVU',                 w:'https://drive.google.com/file/d/1NaFWxL09dTp-amhtplWtvSeR5iBzW3VO/preview' },
+    { name:'באפילה',                  ico:'🕯️', t:'https://www.youtube.com/watch?v=nb2TyPfxaQU',                  w:'https://drive.google.com/file/d/11K3f5amOgknQxlCW7ynmuTMScnppooRI/preview' },
+    { name:'אידה',                    ico:'⛪', t:'https://www.youtube.com/watch?v=_JIXxo8qUn0',                  w:'https://drive.google.com/file/d/10-7zA5Ptvnoo8J8qn7Mq07oBAETTkj5f/preview' },
+    { name:'ניצחון הרוח',             ico:'🕊️', t:'https://www.youtube.com/watch?v=NIHhxGS8Dk0',                 w:'https://drive.google.com/file/d/1ToKZN_Of9KSRC7rUg9FQQlLTAxe0qdhi/preview' },
+];
+
+function openFilm(url) {
+    const mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (mobile) { window.open(url, '_blank'); return; }
+    const w = Math.min(1440, screen.availWidth);
+    const h = Math.round(w * 9 / 16);
+    const l = Math.round((screen.availWidth  - w) / 2);
+    const t = Math.round((screen.availHeight - h) / 2);
+    window.open(url, '_blank',
+        `width=${w},height=${h},left=${l},top=${t},menubar=no,toolbar=no,location=no,status=no`);
+}
+
+const wrap = document.getElementById('films');
+films.forEach(f => {
+    const d = document.createElement('div');
+    d.className = 'card';
+    d.innerHTML = `
+        <div class="ico">${f.ico}</div>
+        <div class="title">${f.name}</div>
+        <div class="btns">
+            <button class="btn-t" onclick="openFilm('${f.t}')">בקרוב</button>
+            <button class="btn-w" onclick="openFilm('${f.w}')">לצפייה</button>
+        </div>`;
+    wrap.appendChild(d);
+});
+</script>
+
+</body>
+</html>

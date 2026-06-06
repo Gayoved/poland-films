@@ -281,7 +281,7 @@
 </div>
 
 <script>
-const films =
+const films = [
     { name:'רשימת שינדלר', ico:'🎩', t:'https://www.youtube.com/watch?v=mxphAlJID9U&t=8s', w:'https://drive.google.com/file/d/1HtdUwqDCokp9jwZOMCuzPPvj6qJ9Vk7-/view?usp=sharing' },
     { name:'הפסנתרן', ico:'🎹', t:'https://www.youtube.com/watch?v=BFwGqLa_oAo&list=PLWCk6fuOaue1MQ8pLkItUrnRb3FV8MohC&index=4', w:'https://drive.google.com/file/d/10-Pcwo2EThYKgEOhjfI8dYUWdrza4UTi/view?usp=sharing' },
     { name:'החיים יפים', ico:'🚲', t:'https://www.youtube.com/watch?v=pAYEQP8gx3w', w:'https://drive.google.com/file/d/1Bh31za3olzsa7pyajUzOGX5fZPx3lPDW/view?usp=sharing' },
@@ -294,31 +294,35 @@ const films =
     { name:'הנפילה', ico:'🏛️', t:'https://www.youtube.com/watch?v=2XiY1ldtWVU&list=PLfq-47Uyyq3cVMCVlaiguVkxZHHX9NQAu', w:'https://drive.google.com/file/d/1NaFWxL09dTp-amhtplWtvSeR5iBzW3VO/view?usp=sharing' },
     { name:'באפילה', ico:'🕯️', t:'https://www.youtube.com/watch?v=nb2TyPfxaQU', w:'https://drive.google.com/file/d/11K3f5amOgknQxlCW7ynmuTMScnppooRI/view?usp=sharing' },
     { name:'אידה', ico:'⛪', t:'https://www.youtube.com/watch?v=_JIXxo8qUn0', w:'https://drive.google.com/file/d/10-7zA5Ptvnoo8J8qn7Mq07oBAETTkj5f/view?usp=sharing' },
-    { name:'ניצחון הרוח', ico:'🕊️', t:'https://www.youtube.com/watch?v=NIHhxGS8Dk0', w:'https://drive.google.com/file/d/1ToKZN_Of9KSRC7rUg9FQQlLTAxe0qdhi/view?usp=sharing' },
+    { name:'ניצחון הרוח', ico:'🕊️', t:'https://www.youtube.com/watch?v=NIHhxGS8Dk0', w:'https://drive.google.com/file/d/1ToKZN_Of9KSRC7rUg9FQQlLTAxe0qdhi/view?usp=sharing' }
 ];
 
 function openFilm(url) {
-    const mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (mobile) { window.open(url, '_blank'); return; }
-    const w = Math.min(1440, screen.availWidth);
-    const h = Math.round(w * 9 / 16);
-    const l = Math.round((screen.availWidth  - w) / 2);
-    const t = Math.round((screen.availHeight - h) / 2);
-    window.open(url, '_blank',
-        `width=${w},height=${h},left=${l},top=${t},menubar=no,toolbar=no,location=no,status=no`);
+    window.open(url, '_blank');
 }
 
 const wrap = document.getElementById('films');
-films.forEach(f => {
+
+films.forEach(function(f) {
     const d = document.createElement('div');
     d.className = 'card';
-    d.innerHTML = `
-        <div class="ico">${f.ico}</div>
-        <div class="title">${f.name}</div>
-        <div class="btns">
-            <button class="btn-t" onclick="openFilm('${f.t}')">בקרוב</button>
-            <button class="btn-w" onclick="openFilm('${f.w}')">לצפייה</button>
-        </div>`;
+
+    d.innerHTML =
+        '<div class="ico">' + f.ico + '</div>' +
+        '<div class="title">' + f.name + '</div>' +
+        '<div class="btns">' +
+        '<button class="btn-t">בקרוב</button>' +
+        '<button class="btn-w">לצפייה</button>' +
+        '</div>';
+
+    d.querySelector('.btn-t').addEventListener('click', function() {
+        openFilm(f.t);
+    });
+
+    d.querySelector('.btn-w').addEventListener('click', function() {
+        openFilm(f.w);
+    });
+
     wrap.appendChild(d);
 });
 </script>

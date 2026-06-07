@@ -144,10 +144,7 @@ const films = [
 function drivePreview(url){ const m=url.match(/\/d\/([^/]+)/); return m ? 'https://drive.google.com/file/d/'+m[1]+'/preview' : url; }
 function openExternal(url){ window.open(url, '_blank', 'noopener,noreferrer'); }
 function openWatch(f){
-    if(!f.watch.includes('drive.google.com')) { openExternal(f.watch); return; }
-    document.getElementById('modalTitle').textContent = f.name;
-    document.getElementById('frameWrap').innerHTML = '<iframe src="'+drivePreview(f.watch)+'" allow="autoplay; fullscreen" allowfullscreen></iframe>';
-    document.getElementById('modal').classList.add('open');
+    openExternal(f.watch);
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); document.getElementById('frameWrap').innerHTML=''; }
 function render(list){

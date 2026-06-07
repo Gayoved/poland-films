@@ -3,329 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מסע לפולין — סרטים מומלצים</title>
-
-    <!-- WhatsApp / Social preview -->
-    <meta property="og:title" content="מסע לפולין — סרטים מומלצים">
-    <meta property="og:description" content="סרטים מעוררי מחשבה לקראת המסע — סיפורי זיכרון, הישרדות, בחירה, התנגדות ואנושיות">
+    <title>ספריית הסרטים למסע לפולין</title>
+    <meta property="og:title" content="ספריית הסרטים למסע לפולין">
+    <meta property="og:description" content="סרטים מעוררי מחשבה לקראת המסע — זיכרון, הישרדות, בחירה, התנגדות ואנושיות">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Auschwitz_II_snow.jpg/640px-Auschwitz_II_snow.jpg">
-
-    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --gold:       #c8a96e;
+            --gold: #c8a96e;
             --gold-light: #f0e0b0;
-            --strip-w:    30px;
+            --gold-soft: rgba(200,169,110,0.16);
+            --dark: #0b0805;
+            --card: rgba(10,7,4,0.82);
+            --card2: rgba(31,22,12,0.86);
+            --muted: #b99f75;
+            --strip-w: 28px;
         }
-
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Heebo', Arial, sans-serif;
-            background: #0c0a06;
+            background: var(--dark);
             color: var(--gold-light);
             direction: rtl;
             min-height: 100vh;
             overflow-x: hidden;
         }
-
-        /* ===== FIXED BACKGROUND ===== */
-        .bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: #100d08;
-            overflow: hidden;
+        .bg { position: fixed; inset: 0; z-index: 0; background:#100d08; overflow:hidden; }
+        .bg img { position:absolute; top:0; height:100%; width:70%; object-fit:cover; filter: sepia(.85) brightness(.44) contrast(1.2) saturate(.8); }
+        .bg img.left { left:0; object-position:center center; -webkit-mask-image:linear-gradient(to right, black 30%, rgba(0,0,0,.65) 60%, transparent 100%); mask-image:linear-gradient(to right, black 30%, rgba(0,0,0,.65) 60%, transparent 100%); }
+        .bg img.right { right:0; object-position:center center; -webkit-mask-image:linear-gradient(to left, black 30%, rgba(0,0,0,.6) 60%, transparent 100%); mask-image:linear-gradient(to left, black 30%, rgba(0,0,0,.6) 60%, transparent 100%); }
+        .bg-top { position:absolute; inset:0; background:
+            linear-gradient(to bottom, rgba(5,3,1,.93) 0%, rgba(5,3,1,.2) 26%, transparent 46%),
+            linear-gradient(to top, rgba(5,3,1,.94) 0%, rgba(5,3,1,.18) 24%, transparent 42%),
+            radial-gradient(ellipse 70% 55% at 50% 26%, rgba(200,155,65,.11) 0%, transparent 70%),
+            linear-gradient(to right, rgba(5,3,1,.7) 0%, transparent 20%),
+            linear-gradient(to left, rgba(5,3,1,.7) 0%, transparent 20%);
         }
-
-        /* Photo elements — full size, positioned absolutely */
-        .bg img {
-            position: absolute;
-            top: 0;
-            height: 100%;
-            width: 70%;
-            object-fit: cover;
-            filter: sepia(0.85) brightness(0.45) contrast(1.2) saturate(0.8);
+        .bg-grain { position:absolute; inset:0; opacity:.05; background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E"); background-size:220px 220px; }
+        .strip { position:fixed; top:0; bottom:0; width:var(--strip-w); z-index:30; background-color:#241e0c; background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='38'%3E%3Crect width='30' height='38' fill='%23241e0c'/%3E%3Crect x='0' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='28.5' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='5' y='8' width='20' height='16' rx='3' fill='%23090705' stroke='%23312610' stroke-width='1'/%3E%3C/svg%3E"); background-size:30px 38px; background-repeat:repeat-y; }
+        .strip.left{left:0;box-shadow:4px 0 18px rgba(0,0,0,.95)} .strip.right{right:0;box-shadow:-4px 0 18px rgba(0,0,0,.95)}
+        .page { position:relative; z-index:10; max-width:1120px; margin:0 auto; padding:48px calc(var(--strip-w) + 18px) 80px; }
+        .header { text-align:center; margin:0 auto 28px; max-width:850px; }
+        .star { display:block; color:var(--gold); font-size:32px; margin-bottom:10px; text-shadow:0 0 28px rgba(200,169,110,.55); }
+        .rule { height:1px; background:linear-gradient(to right, transparent, var(--gold) 22%, var(--gold) 78%, transparent); max-width:360px; margin:0 auto 14px; }
+        h1 { font-family:'Frank Ruhl Libre', Georgia, serif; font-size:clamp(34px,8vw,72px); font-weight:900; line-height:1.04; color:var(--gold-light); text-shadow:0 2px 8px rgba(0,0,0,.97),0 0 50px rgba(200,169,110,.14); letter-spacing:1px; }
+        .subtitle { margin:16px auto 0; font-size:clamp(14px,3vw,18px); color:#d9c28e; line-height:1.75; max-width:720px; }
+        .toolbar { margin:26px auto 32px; display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; }
+        .search { width:min(520px,100%); position:relative; }
+        .search input { width:100%; padding:14px 46px 14px 16px; border-radius:999px; border:1px solid rgba(200,169,110,.35); background:rgba(6,4,2,.72); color:var(--gold-light); font-family:'Heebo',Arial,sans-serif; font-size:16px; outline:none; box-shadow:0 10px 30px rgba(0,0,0,.22); }
+        .search input:focus { border-color:rgba(240,224,176,.8); box-shadow:0 0 0 4px rgba(200,169,110,.12); }
+        .search span { position:absolute; right:17px; top:50%; transform:translateY(-50%); opacity:.8; }
+        .count { color:#b99f75; font-size:14px; }
+        .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
+        .movie { min-height:430px; display:flex; flex-direction:column; overflow:hidden; border-radius:22px; background:linear-gradient(180deg, rgba(31,22,12,.86), rgba(7,5,3,.86)); border:1px solid rgba(200,169,110,.24); box-shadow:0 18px 46px rgba(0,0,0,.45); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); transition:transform .22s ease, border-color .22s ease, background .22s ease; }
+        .movie:hover { transform:translateY(-4px); border-color:rgba(240,224,176,.58); background:linear-gradient(180deg, rgba(44,31,16,.92), rgba(9,6,3,.9)); }
+        .poster { height:190px; position:relative; display:flex; align-items:center; justify-content:center; text-align:center; padding:24px; background:
+            radial-gradient(circle at 50% 28%, rgba(240,224,176,.22), transparent 42%),
+            linear-gradient(135deg, rgba(200,169,110,.24), rgba(255,255,255,.02) 44%, rgba(200,169,110,.12));
+            border-bottom:1px solid rgba(200,169,110,.22); overflow:hidden;
         }
-
-        .bg img.left {
-            left: 0;
-            object-position: center center;
-            -webkit-mask-image: linear-gradient(to right, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
-            mask-image:         linear-gradient(to right, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
-        }
-
-        .bg img.right {
-            right: 0;
-            object-position: center center;
-            -webkit-mask-image: linear-gradient(to left, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
-            mask-image:         linear-gradient(to left, black 30%, rgba(0,0,0,0.6) 60%, transparent 100%);
-        }
-
-        /* Atmospheric overlays */
-        .bg-top {
-            position: absolute;
-            inset: 0;
-            background:
-                /* strong top dark */
-                linear-gradient(to bottom,  rgba(5,3,1,0.90) 0%, rgba(5,3,1,0.15) 22%, transparent 42%),
-                /* strong bottom dark */
-                linear-gradient(to top,     rgba(5,3,1,0.92) 0%, rgba(5,3,1,0.15) 20%, transparent 38%),
-                /* warm centre glow */
-                radial-gradient(ellipse 65% 50% at 50% 33%, rgba(200,155,65,0.075) 0%, transparent 70%),
-                /* left edge */
-                linear-gradient(to right, rgba(5,3,1,0.55) 0%, transparent 15%),
-                /* right edge */
-                linear-gradient(to left,  rgba(5,3,1,0.55) 0%, transparent 15%);
-        }
-
-        /* film-grain */
-        .bg-grain {
-            position: absolute; inset: 0;
-            opacity: 0.045;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)'/%3E%3C/svg%3E");
-            background-size: 220px 220px;
-        }
-
-        /* ===== FILM STRIPS ===== */
-        /*
-          Tile is 30×38 px.
-          Strip body: #28200e  (visible warm dark)
-          Hole fill:  #090705  (darker — creates "real hole" look)
-          Edge lines: thin gold
-        */
-        .strip {
-            position: fixed;
-            top: 0; bottom: 0;
-            width: var(--strip-w);
-            z-index: 30;
-            background-color: #241e0c;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='38'%3E%3Crect width='30' height='38' fill='%23241e0c'/%3E%3Crect x='0' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='28.5' y='0' width='1.5' height='38' fill='%23433418'/%3E%3Crect x='5' y='8' width='20' height='16' rx='3' fill='%23090705' stroke='%23312610' stroke-width='1'/%3E%3C/svg%3E");
-            background-size: 30px 38px;
-            background-repeat: repeat-y;
-        }
-        .strip.left  { left:0;  box-shadow:  4px 0 18px rgba(0,0,0,0.95); }
-        .strip.right { right:0; box-shadow: -4px 0 18px rgba(0,0,0,0.95); }
-
-        /* ===== PAGE CONTENT ===== */
-        .page {
-            position: relative;
-            z-index: 10;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 46px calc(var(--strip-w) + 18px) 72px;
-        }
-
-        /* Header */
-        .header { text-align: center; margin-bottom: 30px; }
-
-        .star {
-            display: block;
-            color: var(--gold);
-            font-size: 30px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 28px rgba(200,169,110,0.55);
-        }
-
-        .rule {
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--gold) 22%, var(--gold) 78%, transparent);
-            max-width: 290px;
-            margin: 0 auto 14px;
-        }
-
-        .diamond {
-            display: block;
-            color: var(--gold);
-            font-size: 10px;
-            opacity: 0.65;
-            margin: 5px auto;
-        }
-
-        h1 {
-            font-family: 'Frank Ruhl Libre', Georgia, serif;
-            font-size: clamp(30px, 9vw, 58px);
-            font-weight: 900;
-            line-height: 1.1;
-            color: var(--gold-light);
-            text-shadow:
-                0 2px 8px rgba(0,0,0,0.97),
-                0 0 50px rgba(200,169,110,0.13);
-            letter-spacing: 1.5px;
-        }
-
-        .subtitle {
-            margin-top: 14px;
-            font-size: clamp(12px, 3.2vw, 14px);
-            color: #7a6040;
-            line-height: 1.9;
-        }
-
-        /* Film cards */
-        .films { display: flex; flex-direction: column; gap: 8px; }
-
-        .card {
-            background: rgba(6,4,2,0.74);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(200,169,110,0.2);
-            border-radius: 13px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            transition: background .2s, border-color .2s;
-        }
-        .card:hover {
-            background: rgba(200,169,110,0.07);
-            border-color: rgba(200,169,110,0.48);
-        }
-
-        .ico {
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            background: rgba(200,169,110,0.09);
-            border: 1px solid rgba(200,169,110,0.38);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .title {
-            flex: 1;
-            font-size: clamp(13px, 3.6vw, 17px);
-            font-weight: 700;
-            color: var(--gold-light);
-            line-height: 1.25;
-        }
-
-        .btns { display: flex; gap: 6px; flex-shrink: 0; }
-
-        button {
-            font-family: 'Heebo', Arial, sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 6px 13px;
-            border-radius: 7px;
-            cursor: pointer;
-            border: 1px solid;
-            transition: all .15s;
-        }
-
-        .btn-t { background: transparent; border-color: rgba(200,169,110,0.42); color: var(--gold); }
-        .btn-t:hover { background: rgba(200,169,110,0.1); border-color: var(--gold); }
-
-        .btn-w { background: rgba(200,169,110,0.15); border-color: var(--gold); color: var(--gold-light); }
-        .btn-w:hover { background: rgba(200,169,110,0.3); }
-
-        .ornament { text-align: center; margin-top: 34px; color: var(--gold); opacity: 0.28; font-size: 26px; }
-
-        @media (max-width: 440px) {
-            :root { --strip-w: 20px; }
-            button { padding: 5px 9px; font-size: 10px; }
-            .ico { width: 36px; height: 36px; font-size: 15px; }
-        }
-        @media (max-width: 330px) {
-            :root { --strip-w: 0px; }
-            .strip { display: none; }
-        }
+        .poster::before { content:""; position:absolute; inset:13px; border:1px solid rgba(240,224,176,.34); border-radius:16px; }
+        .poster::after { content:""; position:absolute; inset:0; opacity:.12; background:repeating-linear-gradient(90deg, transparent 0 12px, rgba(255,255,255,.4) 13px, transparent 14px); }
+        .posterIcon { font-size:48px; margin-bottom:10px; display:block; filter:drop-shadow(0 8px 18px rgba(0,0,0,.45)); }
+        .posterTitle { position:relative; z-index:1; font-family:'Frank Ruhl Libre', Georgia, serif; font-weight:900; font-size:clamp(28px,4vw,40px); line-height:1.05; text-shadow:0 3px 10px rgba(0,0,0,.72); }
+        .body { padding:18px 18px 16px; flex:1; display:flex; flex-direction:column; }
+        .movie h2 { font-family:'Frank Ruhl Libre', Georgia, serif; font-size:28px; line-height:1.08; margin-bottom:10px; color:#fff0bd; }
+        .desc { color:#e6d5a6; font-size:15px; line-height:1.55; margin-bottom:13px; min-height:70px; }
+        .tags { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px; }
+        .tag { font-size:12px; color:#f1dfad; border:1px solid rgba(200,169,110,.32); background:rgba(200,169,110,.09); border-radius:999px; padding:4px 9px; }
+        .actions { margin-top:auto; display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+        button, a.action { font-family:'Heebo', Arial, sans-serif; font-size:14px; font-weight:800; padding:11px 12px; border-radius:12px; cursor:pointer; border:1px solid; transition:all .16s; text-decoration:none; text-align:center; }
+        .trailer { background:transparent; border-color:rgba(200,169,110,.52); color:var(--gold-light); }
+        .trailer:hover { background:rgba(200,169,110,.12); border-color:var(--gold-light); }
+        .watch { background:rgba(200,169,110,.20); border-color:var(--gold); color:#fff0bd; }
+        .watch:hover { background:rgba(200,169,110,.34); }
+        .empty { display:none; text-align:center; padding:48px 16px; color:#d2bd8a; font-size:18px; }
+        .modal { position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.82); padding:26px; }
+        .modal.open { display:flex; }
+        .modalBox { width:min(1060px,100%); background:#090705; border:1px solid rgba(200,169,110,.44); border-radius:18px; box-shadow:0 26px 80px rgba(0,0,0,.7); overflow:hidden; }
+        .modalHeader { display:flex; justify-content:space-between; align-items:center; padding:13px 16px; border-bottom:1px solid rgba(200,169,110,.22); color:#fff0bd; }
+        .modalTitle { font-weight:800; font-size:18px; }
+        .close { background:transparent; color:#fff0bd; border:1px solid rgba(200,169,110,.45); border-radius:10px; padding:6px 11px; font-size:15px; }
+        .frameWrap { position:relative; width:100%; aspect-ratio:16/9; background:#000; }
+        .frameWrap iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+        .modalNote { padding:10px 16px; color:#b99f75; font-size:13px; border-top:1px solid rgba(200,169,110,.16); }
+        .ornament { text-align:center; margin-top:34px; color:var(--gold); opacity:.34; font-size:28px; }
+        @media (max-width:900px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} .page{max-width:760px;} }
+        @media (max-width:620px){ :root{--strip-w:20px;} .page{padding-top:38px;} .grid{grid-template-columns:1fr; gap:16px;} .movie{min-height:auto;} .poster{height:170px;} .desc{min-height:0;} .toolbar{margin-bottom:22px;} .actions{grid-template-columns:1fr;} .modal{padding:10px;} }
+        @media (max-width:330px){ :root{--strip-w:0px;} .strip{display:none;} }
     </style>
 </head>
 <body>
-
-<!-- Background -->
 <div class="bg" aria-hidden="true">
-    <!--
-        Using <img> elements directly — browsers load these more reliably than CSS background-image.
-        onerror hides the element silently; the warm CSS gradient fallback takes over.
-        Birkenau gate (left) + Krakow/Kazimierz street (right).
-    -->
-    <img class="left"
-         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Auschwitz_II_snow.jpg/1280px-Auschwitz_II_snow.jpg"
-         alt=""
-         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/4/4f/Auschwitz_II_snow.jpg';this.onerror=function(){this.style.display='none'}">
-
-    <img class="right"
-         src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG/1280px-Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG"
-         alt=""
-         onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/94/Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG';this.onerror=function(){this.style.display='none'}">
-
-    <div class="bg-top"></div>
-    <div class="bg-grain"></div>
+    <img class="left" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Auschwitz_II_snow.jpg/1280px-Auschwitz_II_snow.jpg" alt="" onerror="this.style.display='none'">
+    <img class="right" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG/1280px-Tenement%2C_15_Szeroka_street%2C_Kazimierz%2C_Krakow%2C_Poland.JPG" alt="" onerror="this.style.display='none'">
+    <div class="bg-top"></div><div class="bg-grain"></div>
 </div>
-
-<!-- Film strips -->
-<div class="strip left"  aria-hidden="true"></div>
-<div class="strip right" aria-hidden="true"></div>
-
-<!-- Content -->
+<div class="strip left" aria-hidden="true"></div><div class="strip right" aria-hidden="true"></div>
 <div class="page">
-
     <header class="header">
         <span class="star">✡</span>
         <div class="rule"></div>
-        <h1>סרטים מומלצים<br>לקראת המסע לפולין</h1>
-        <span class="diamond">◆</span>
-        <div class="rule" style="margin-top:4px"></div>
-        <p class="subtitle">
-            סרטים מעוררי מחשבה לקראת המסע —<br>
-            סיפורי זיכרון, הישרדות, בחירה,<br>
-            התנגדות ואנושיות
-        </p>
+        <h1>ספריית הסרטים<br>למסע לפולין</h1>
+        <div class="rule" style="margin-top:14px"></div>
+        <p class="subtitle">סרטים מעוררי מחשבה לקראת המסע — סיפורי זיכרון, הישרדות, בחירה, התנגדות ואנושיות.</p>
     </header>
-
-    <div class="films" id="films"></div>
+    <div class="toolbar">
+        <label class="search"><span>🔍</span><input id="searchInput" type="search" placeholder="חיפוש לפי שם הסרט או נושא"></label>
+        <div class="count" id="count"></div>
+    </div>
+    <main class="grid" id="films"></main>
+    <div class="empty" id="empty">לא נמצאו סרטים מתאימים לחיפוש.</div>
     <div class="ornament">❧</div>
-
 </div>
-
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="נגן סרט">
+    <div class="modalBox">
+        <div class="modalHeader"><div class="modalTitle" id="modalTitle">צפייה</div><button class="close" id="closeModal">סגור ✕</button></div>
+        <div class="frameWrap" id="frameWrap"></div>
+        <div class="modalNote">אם הסרט אינו נטען בתוך הדף, פתחו אותו בלשונית חדשה דרך כפתור הצפייה בכרטיס.</div>
+    </div>
+</div>
 <script>
 const films = [
-    { name:'רשימת שינדלר', ico:'🎩', t:'https://www.youtube.com/watch?v=mxphAlJID9U&t=8s', w:'https://drive.google.com/file/d/1HtdUwqDCokp9jwZOMCuzPPvj6qJ9Vk7-/view?usp=sharing' },
-    { name:'הפסנתרן', ico:'🎹', t:'https://www.youtube.com/watch?v=BFwGqLa_oAo&list=PLWCk6fuOaue1MQ8pLkItUrnRb3FV8MohC&index=4', w:'https://drive.google.com/file/d/10-Pcwo2EThYKgEOhjfI8dYUWdrza4UTi/view?usp=sharing' },
-    { name:'החיים יפים', ico:'🚲', t:'https://www.youtube.com/watch?v=pAYEQP8gx3w', w:'https://drive.google.com/file/d/1Bh31za3olzsa7pyajUzOGX5fZPx3lPDW/view?usp=sharing' },
-    { name:'אירופה אירופה', ico:'✡️', t:'https://www.youtube.com/watch?v=JqMBNCo7LPE', w:'https://drive.google.com/file/d/18PCSnHCFHcAFQJsWl8UHYfIvrWksZ-lC/view?usp=sharing' },
-    { name:'הבריחה מסוביבור', ico:'🏃', t:'https://www.youtube.com/watch?v=loyfIoYNmWA', w:'https://www.youtube.com/watch?v=k1HmdVqZpRk' },
-    { name:'התנגדות', ico:'✊', t:'https://www.youtube.com/watch?v=7APcuF5nNfQ', w:'https://drive.google.com/file/d/1s-fs7o7uXfTycIqYwL1DGXqnFZp4yPxo/view?usp=sharing' },
-    { name:'הזייפנים', ico:'✒️', t:'https://www.youtube.com/watch?v=oM8DhS78oZc', w:'https://drive.google.com/file/d/1QT3BiB8JC1c9DX_VPtWeXAEXcNfNYRJk/view?usp=sharing' },
-    { name:'התקוממות', ico:'🔥', t:'https://www.youtube.com/watch?v=OoCU2gd_2b0', w:'https://drive.google.com/file/d/19h6VR4flPFA9_3QXvQ8vDCZqG99edHXL/view?usp=sharing' },
-    { name:'אשתו של שומר גן החיות', ico:'🐾', t:'https://youtu.be/rJNFeHHGGN4?si=sU4DDVMd3CJrTGw8', w:'https://drive.google.com/file/d/1XsysxK17PH1JbvXHSONJt8h92pqNKA4g/view?usp=sharing' },
-    { name:'הנפילה', ico:'🏛️', t:'https://www.youtube.com/watch?v=2XiY1ldtWVU&list=PLfq-47Uyyq3cVMCVlaiguVkxZHHX9NQAu', w:'https://drive.google.com/file/d/1NaFWxL09dTp-amhtplWtvSeR5iBzW3VO/view?usp=sharing' },
-    { name:'באפילה', ico:'🕯️', t:'https://www.youtube.com/watch?v=nb2TyPfxaQU', w:'https://drive.google.com/file/d/11K3f5amOgknQxlCW7ynmuTMScnppooRI/view?usp=sharing' },
-    { name:'אידה', ico:'⛪', t:'https://www.youtube.com/watch?v=_JIXxo8qUn0', w:'https://drive.google.com/file/d/10-7zA5Ptvnoo8J8qn7Mq07oBAETTkj5f/view?usp=sharing' },
-    { name:'ניצחון הרוח', ico:'🕊️', t:'https://www.youtube.com/watch?v=NIHhxGS8Dk0', w:'https://drive.google.com/file/d/1ToKZN_Of9KSRC7rUg9FQQlLTAxe0qdhi/view?usp=sharing' }
+ {name:'רשימת שינדלר', icon:'🎩', summary:'תעשיין גרמני משנה את דרכו ומציל יהודים בתקופת השואה.', tags:['הצלה','בחירה מוסרית','גרמניה'], trailer:'https://www.youtube.com/watch?v=mxphAlJID9U&t=8s', watch:'https://drive.google.com/file/d/1HtdUwqDCokp9jwZOMCuzPPvj6qJ9Vk7-/view?usp=sharing'},
+ {name:'הפסנתרן', icon:'🎹', summary:'מוזיקאי יהודי נאבק לשרוד בגטו ורשה ובחורבות העיר.', tags:['גטו ורשה','הישרדות','מוזיקה'], trailer:'https://www.youtube.com/watch?v=BFwGqLa_oAo&list=PLWCk6fuOaue1MQ8pLkItUrnRb3FV8MohC&index=4', watch:'https://drive.google.com/file/d/10-Pcwo2EThYKgEOhjfI8dYUWdrza4UTi/view?usp=sharing'},
+ {name:'החיים יפים', icon:'🚲', summary:'אב מנסה להגן על נפשו של בנו באמצעות דמיון, אהבה והומור.', tags:['משפחה','מחנה','אנושיות'], trailer:'https://www.youtube.com/watch?v=pAYEQP8gx3w', watch:'https://drive.google.com/file/d/1Bh31za3olzsa7pyajUzOGX5fZPx3lPDW/view?usp=sharing'},
+ {name:'אירופה אירופה', icon:'✡️', summary:'נער יהודי שורד בזהות שאולה בלב אירופה הנאצית.', tags:['זהות','נוער','התחזות'], trailer:'https://www.youtube.com/watch?v=JqMBNCo7LPE', watch:'https://drive.google.com/file/d/18PCSnHCFHcAFQJsWl8UHYfIvrWksZ-lC/view?usp=sharing'},
+ {name:'הבריחה מסוביבור', icon:'🏃', summary:'סיפור מרד ובריחה ממחנה ההשמדה סוביבור.', tags:['מרד','מחנה השמדה','התנגדות'], trailer:'https://www.youtube.com/watch?v=loyfIoYNmWA', watch:'https://www.youtube.com/watch?v=k1HmdVqZpRk'},
+ {name:'התנגדות', icon:'✊', summary:'האחים ביילסקי מקימים מחנה פרטיזנים ומצילים יהודים ביערות.', tags:['פרטיזנים','התנגדות','הצלה'], trailer:'https://www.youtube.com/watch?v=7APcuF5nNfQ', watch:'https://drive.google.com/file/d/1s-fs7o7uXfTycIqYwL1DGXqnFZp4yPxo/view?usp=sharing'},
+ {name:'הזייפנים', icon:'✒️', summary:'אסירים נדרשים לזייף כסף עבור הנאצים ומתמודדים עם דילמה מוסרית.', tags:['דילמה מוסרית','מחנה','כפייה'], trailer:'https://www.youtube.com/watch?v=oM8DhS78oZc', watch:'https://drive.google.com/file/d/1QT3BiB8JC1c9DX_VPtWeXAEXcNfNYRJk/view?usp=sharing'},
+ {name:'התקוממות', icon:'🔥', summary:'דרמה על מרד גטו ורשה ועל הבחירה להתנגד מול חורבן.', tags:['גטו ורשה','מרד','התנגדות'], trailer:'https://www.youtube.com/watch?v=OoCU2gd_2b0', watch:'https://drive.google.com/file/d/19h6VR4flPFA9_3QXvQ8vDCZqG99edHXL/view?usp=sharing'},
+ {name:'אשתו של שומר גן החיות', icon:'🐾', summary:'זוג פולני מסתיר ומציל יהודים בגן החיות של ורשה.', tags:['חסידי אומות העולם','הצלה','ורשה'], trailer:'https://youtu.be/rJNFeHHGGN4?si=sU4DDVMd3CJrTGw8', watch:'https://drive.google.com/file/d/1XsysxK17PH1JbvXHSONJt8h92pqNKA4g/view?usp=sharing'},
+ {name:'הנפילה', icon:'🏛️', summary:'ימיו האחרונים של היטלר בבונקר בברלין לקראת קריסת הרייך.', tags:['גרמניה','סוף המלחמה','נאציזם'], trailer:'https://www.youtube.com/watch?v=2XiY1ldtWVU&list=PLfq-47Uyyq3cVMCVlaiguVkxZHHX9NQAu', watch:'https://drive.google.com/file/d/1NaFWxL09dTp-amhtplWtvSeR5iBzW3VO/view?usp=sharing'},
+ {name:'באפילה', icon:'🕯️', summary:'קבוצת יהודים מסתתרת בתעלות הביוב בלבוב ונאבקת לשרוד.', tags:['מסתור','לבוב','הישרדות'], trailer:'https://www.youtube.com/watch?v=nb2TyPfxaQU', watch:'https://drive.google.com/file/d/11K3f5amOgknQxlCW7ynmuTMScnppooRI/view?usp=sharing'},
+ {name:'אידה', icon:'⛪', summary:'צעירה פולנייה מגלה את שורשיה היהודיים ואת עבר משפחתה.', tags:['זהות','פולין','זיכרון'], trailer:'https://www.youtube.com/watch?v=_JIXxo8qUn0', watch:'https://drive.google.com/file/d/10-7zA5Ptvnoo8J8qn7Mq07oBAETTkj5f/view?usp=sharing'},
+ {name:'ניצחון הרוח', icon:'🕊️', summary:'סיפורו של מתאגרף יהודי הנאלץ להיאבק כדי לשרוד באושוויץ.', tags:['אושוויץ','הישרדות','ספורט'], trailer:'https://www.youtube.com/watch?v=NIHhxGS8Dk0', watch:'https://drive.google.com/file/d/1ToKZN_Of9KSRC7rUg9FQQlLTAxe0qdhi/view?usp=sharing'}
 ];
-
-function openFilm(url) {
-    window.open(url, '_blank');
+function drivePreview(url){ const m=url.match(/\/d\/([^/]+)/); return m ? 'https://drive.google.com/file/d/'+m[1]+'/preview' : url; }
+function openExternal(url){ window.open(url, '_blank', 'noopener,noreferrer'); }
+function openWatch(f){
+    if(!f.watch.includes('drive.google.com')) { openExternal(f.watch); return; }
+    document.getElementById('modalTitle').textContent = f.name;
+    document.getElementById('frameWrap').innerHTML = '<iframe src="'+drivePreview(f.watch)+'" allow="autoplay; fullscreen" allowfullscreen></iframe>';
+    document.getElementById('modal').classList.add('open');
 }
-
-const wrap = document.getElementById('films');
-
-films.forEach(function(f) {
-    const d = document.createElement('div');
-    d.className = 'card';
-
-    d.innerHTML =
-        '<div class="ico">' + f.ico + '</div>' +
-        '<div class="title">' + f.name + '</div>' +
-        '<div class="btns">' +
-        '<button class="btn-t">בקרוב</button>' +
-        '<button class="btn-w">לצפייה</button>' +
-        '</div>';
-
-    d.querySelector('.btn-t').addEventListener('click', function() {
-        openFilm(f.t);
+function closeModal(){ document.getElementById('modal').classList.remove('open'); document.getElementById('frameWrap').innerHTML=''; }
+function render(list){
+    const wrap=document.getElementById('films'); wrap.innerHTML='';
+    list.forEach(f=>{
+        const card=document.createElement('article'); card.className='movie';
+        card.innerHTML = `<div class="poster"><div><span class="posterIcon">${f.icon}</span><div class="posterTitle">${f.name}</div></div></div>
+        <div class="body"><h2>${f.name}</h2><p class="desc">${f.summary}</p><div class="tags">${f.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <div class="actions"><button class="trailer">בקרוב</button><button class="watch">צפייה</button></div></div>`;
+        card.querySelector('.trailer').addEventListener('click',()=>openExternal(f.trailer));
+        card.querySelector('.watch').addEventListener('click',()=>openWatch(f));
+        wrap.appendChild(card);
     });
-
-    d.querySelector('.btn-w').addEventListener('click', function() {
-        openFilm(f.w);
-    });
-
-    wrap.appendChild(d);
-});
+    document.getElementById('count').textContent = list.length + ' סרטים';
+    document.getElementById('empty').style.display = list.length ? 'none' : 'block';
+}
+function filter(){
+    const q=document.getElementById('searchInput').value.trim().toLowerCase();
+    if(!q){ render(films); return; }
+    render(films.filter(f => (f.name+' '+f.summary+' '+f.tags.join(' ')).toLowerCase().includes(q)));
+}
+document.getElementById('searchInput').addEventListener('input', filter);
+document.getElementById('closeModal').addEventListener('click', closeModal);
+document.getElementById('modal').addEventListener('click', e => { if(e.target.id==='modal') closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+render(films);
 </script>
-
 </body>
 </html>

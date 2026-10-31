@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>כוח בהדרגה 50+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: one narrow column (phone first), sticky bottom tab bar, one view at a time. */
+:root{
+  --bg:#f3f5f2;
+  --surface:#ffffff;
+  --ink:#1c2621;
+  --muted:#5d6b63;
+  --line:#d9e0db;
+  --accent:#1f6b52;
+  --accent-ink:#ffffff;
+  --accent-soft:#e1efe8;
+  --good:#2f7d32;
+  --warn:#a35f00;
+  --bad:#b3261e;
+  --warn-soft:#fbefdc;
+  --bad-soft:#fbe4e2;
+  --font-display:"Rubik","Assistant",system-ui,sans-serif;
+  --font-body:"Assistant",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121815;--surface:#1b2420;--ink:#e7eee9;--muted:#9fb0a6;--line:#2e3a34;
+    --accent:#5cc49c;--accent-ink:#0c1a14;--accent-soft:#1f3a2f;
+    --good:#7bc97f;--warn:#f0b35a;--bad:#f2867d;--warn-soft:#3a2d17;--bad-soft:#3d1f1d;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121815;--surface:#1b2420;--ink:#e7eee9;--muted:#9fb0a6;--line:#2e3a34;
+  --accent:#5cc49c;--accent-ink:#0c1a14;--accent-soft:#1f3a2f;
+  --good:#7bc97f;--warn:#f0b35a;--bad:#f2867d;--warn-soft:#3a2d17;--bad-soft:#3d1f1d;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.5}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.25}
+h1{font-size:1.45rem}
+h2{font-size:1.2rem}
+h3{font-size:1.02rem}
+p{margin:0}
+a{color:var(--accent)}
+.wrap{max-width:640px;margin:0 auto;padding:16px 16px 96px;display:flex;flex-direction:column;gap:16px}
+header.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+header.top .sync{font-size:.8rem;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card.hero{border-color:var(--accent);border-width:2px}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:.82rem;font-weight:600;background:var(--accent-soft);color:var(--accent)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.good{background:var(--accent-soft);color:var(--good)}
+button,.btn{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:12px 16px;cursor:pointer;min-height:48px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+button.primary,.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.big{width:100%;font-size:1.15rem;min-height:58px}
+button.ghost{background:transparent}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{flex:1;border:0;border-radius:0;min-height:44px;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.choices{display:grid;gap:8px}
+.choices button{justify-content:flex-start;text-align:right;font-weight:600}
+.choices button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--ink);box-shadow:inset 0 0 0 1px var(--accent)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;font-size:.8rem;color:var(--muted)}
+.week .d{display:flex;flex-direction:column;align-items:center;gap:4px}
+.week .dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--line)}
+.week .dot.done{background:var(--accent);border-color:var(--accent)}
+.week .today .dot{border-color:var(--accent)}
+.bar{height:10px;background:var(--line);border-radius:999px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:999px}
+ul.clean{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.cues{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:4px}
+.ex{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.ex:last-child{border-bottom:0}
+.ex .t{font-weight:700}
+.ex .amt{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+.vid{font-weight:600;font-size:.92rem}
+.banner{border-radius:10px;padding:12px 14px;font-size:.95rem}
+.banner.warn{background:var(--warn-soft);color:var(--ink);border:1px solid var(--warn)}
+.banner.bad{background:var(--bad-soft);color:var(--ink);border:1px solid var(--bad)}
+.banner.info{background:var(--accent-soft);color:var(--ink);border:1px solid var(--accent)}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:5}
+nav.tabs button{border:0;border-radius:0;background:transparent;min-height:60px;font-size:.85rem;font-weight:600;color:var(--muted);flex-direction:column;gap:2px;padding:6px 2px}
+nav.tabs button[aria-current="page"]{color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+nav.tabs svg{width:22px;height:22px}
+/* player */
+.player{gap:14px}
+.player .where{font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.player .name{font-size:1.5rem}
+.player .target{font-family:var(--font-display);font-size:2.6rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.1}
+.clock{font-family:var(--font-display);font-size:4rem;font-weight:700;text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+.clock.rest{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:right;padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+td.num{font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto}
+input[type="number"],textarea,select{font:inherit;width:100%;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+input[type="number"]{max-width:110px;text-align:center;font-variant-numeric:tabular-nums}
+textarea{min-height:110px;direction:ltr;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem}
+label.check{display:flex;gap:10px;align-items:flex-start}
+label.check input{width:22px;height:22px;margin-top:2px;flex:none}
+.testrow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.testrow:last-child{border-bottom:0}
+details summary{cursor:pointer;font-weight:700;font-family:var(--font-display);padding:4px 0}
+details[open] summary{margin-bottom:8px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--font-body)}
+.hidden{display:none !important}
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header class="top">
+    <h1>כוח בהדרגה 50+</h1>
+    <span class="sync" id="sync">נשמר במכשיר</span>
+  </header>
+  <main id="view"></main>
+</div>
+<nav class="tabs" id="tabs" aria-label="ניווט">
+  <button data-tab="home" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>בית</button>
+  <button data-tab="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M4 14h10M4 9h16M4 4h10"/></svg>התוכנית</button>
+  <button data-tab="log"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>התקדמות</button>
+  <button data-tab="safety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>בטיחות</button>
+  <button data-tab="backup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v3h16v-3"/></svg>גיבוי</button>
+</nav>
+
+<script>
+"use strict";
+/* ============ DATA ============ */
+const YT = id => "https://www.youtube.com/watch?v=" + id;
+
+/* type: reps | hold ; side: per side ; park: needs park bar ; band: needs band ; home: substitute when not at park ; noBand: substitute without band */
+const EX = {
+  wall_pu:{name:"שכיבת סמיכה על הקיר",type:"reps",cues:["כפות ידיים על הקיר בגובה הכתפיים, מעט רחב מהן","גוף ישר מהראש עד העקבים, בטן אסופה","יורדים בשתי שניות עד שהחזה קרוב לקיר, ודוחפים חזרה"],v:[["jAUeJV4TCus","הדגמה לגיל המבוגר (פיזיותרפיסטית)"],["YWw-3rGaoT0","סרטון קצר"]]},
+  incline_pu:{name:"שכיבת סמיכה על משטח גבוה",type:"reps",cues:["ידיים על שיש או שולחן יציב בגובה המותניים","גוף בקו ישר, מרפקים בזווית של כ-45° מהגוף ולא לצדדים","מורידים את החזה עד קצה המשטח ודוחפים חזרה"],v:[["VbzbWcYjeTo","הדגמה לגילאי 50+"],["mf2KBpY2qAA","סרטון קצר"]]},
+  bar_pu:{name:"שכיבת סמיכה על מוט או ספסל בגינה",type:"reps",park:true,home:"incline_pu",cues:["ידיים על מוט בגובה הירכיים או על ספסל יציב","ככל שהמוט נמוך יותר, התרגיל קשה יותר. מתחילים גבוה","גוף ישר, החזה יורד עד המוט"],v:[["S42a3A1_ZA0","הדגמה על מוט"]]},
+  knee_pu:{name:"שכיבת סמיכה על הברכיים",type:"reps",cues:["ידיים מעט רחב מהכתפיים, כתפיים מעל כפות הידיים","קו ישר מהראש עד הברכיים. לא מורידים את האגן","מניחים כרית או מגבת מקופלת מתחת לברכיים"],v:[["6DFAEphpiE0","הדגמה מפורטת"],["7-l4p6qn-ZU","סרטון קצר"]]},
+  pushup:{name:"שכיבת סמיכה מלאה",type:"reps",cues:["ידיים מתחת לכתפיים, גוף ישר כמו קרש","מרפקים בזווית של כ-45° מהגוף","יורדים בשליטה עד שהחזה כמעט נוגע ברצפה"],v:[["s1X8e4JFdbE","הדגמה"]]},
+  sit_hands:{name:"קימה מכיסא (מותר להיעזר בידיים)",type:"reps",cues:["כיסא יציב בלי גלגלים, צמוד לקיר","רגליים ברוחב האגן, כפות הרגליים מעט מאחורי הברכיים","נשענים קדימה וקמים. מותר לדחוף קלות עם הידיים על הירכיים. יורדים לאט"],v:[["YMNu5-ExVTk","סרטון קצר"],["2GvxQPmn2n8","שלבי התקדמות לגיל המבוגר"]]},
+  sit_stand:{name:"קימה מכיסא בלי ידיים",type:"reps",cues:["ידיים משוכלות על החזה","קמים בלי תנופה, ברכיים בכיוון האצבעות","יורדים לאט, 2–3 שניות, עד נגיעה בכיסא"],v:[["2GvxQPmn2n8","שלבי התקדמות לגיל המבוגר"],["YMNu5-ExVTk","סרטון קצר"]]},
+  box_squat:{name:"סקוואט לספסל",type:"reps",cues:["ספסל או כיסא מאחוריך","מוציאים את הישבן לאחור, ברכיים בכיוון האצבעות, גב ישר","נוגעים קלות בספסל בלי להתיישב, וקמים"],v:[["7LpLZOdz68A","הדגמה"]]},
+  squat:{name:"סקוואט חופשי",type:"reps",cues:["רגליים מעט רחב מהאגן, אצבעות מעט החוצה","יורדים כאילו מתיישבים, עקבים צמודים לרצפה","יורדים רק לעומק שאפשר בלי כאב, וקמים"],v:[["4Pg2PeH9U_Y","מדריך למתחילים"]]},
+  split:{name:"לאנג' סטטי עם אחיזה",type:"reps",side:true,cues:["עמידת צעד ארוך, יד אחת אוחזת במוט או בקיר לאיזון","הברך האחורית יורדת ישר למטה לכיוון הרצפה","הברך הקדמית נשארת מעל הקרסול. דוחפים דרך העקב הקדמי"],v:[["phJumEqPjxw","לאנג' עם אחיזה"],["SGHnCftrZkA","מדריך למתחילים"]]},
+  calf:{name:"עליות על קצות האצבעות",type:"reps",cues:["יד על קיר או מוט לאיזון","עולים לאט גבוה ככל האפשר ומחזיקים שנייה למעלה","יורדים לאט עד שהעקבים על הרצפה"],v:[["CmTa5K9meXQ","הדגמה לגיל המבוגר"]]},
+  bridge:{name:"גשר ישבן",type:"reps",cues:["שכיבה על הגב, ברכיים כפופות, כפות רגליים על הרצפה","מכווצים ישבן ומרימים את האגן עד קו ישר מהכתפיים לברכיים","מחזיקים שנייה למעלה. לא מקשתים את הגב"],v:[["CPb8yRUxWBQ","הדגמה (פיזיותרפיסט)"]]},
+  incl_plank:{name:"פלאנק בשיפוע",type:"hold",cues:["אמות או כפות ידיים על שולחן יציב או ספסל","גוף בקו ישר, בטן וישבן מכווצים","נושמים כל הזמן. לא עוצרים נשימה"],v:[["DB2vckN0RQw","סרטון קצר"]]},
+  knee_plank:{name:"פלאנק על המרפקים והברכיים",type:"hold",cues:["מרפקים מתחת לכתפיים","קו ישר מהראש עד הברכיים","נושמים לאט. מפסיקים אם הגב התחתון שוקע"],v:[["iDSHokfXqyA","הדגמה"]]},
+  plank:{name:"פלאנק על המרפקים",type:"hold",cues:["מרפקים מתחת לכתפיים, רגליים ישרות","גוף ישר כמו קרש, לא מרימים ולא מורידים את האגן","נושמים כל הזמן"],v:[["8b13VkLlHeo","פלאנק למתחילים ולגיל המבוגר"]]},
+  bird_dog:{name:"ציפור-כלב (Bird Dog)",type:"reps",side:true,cues:["על הברכיים והידיים: ידיים מתחת לכתפיים, ברכיים מתחת לאגן","מותחים יד אחת ואת הרגל הנגדית עד קו ישר, ומחזיקים 2 שניות","הגב נשאר ישר ושקט. מחליפים צד"],v:[["LaLKNS7mxrk","הדגמה למתחילים (פיזיותרפיסטית)"]]},
+  band_row:{name:"חתירה עם גומייה",type:"reps",band:true,noBand:"towel_row",cues:["גומייה מעוגנת בגובה החזה, בעוגן דלת או סביב עמוד","מושכים את המרפקים לאחור לצד הגוף ומקרבים את השכמות","חוזרים לאט, 2 שניות"],v:[["ysAjxPSFC7M","הדגמה"]]},
+  towel_row:{name:"חתירת מגבת",type:"reps",cues:["מגבת חזקה סביב עמוד או מעקה יציב. לא על ידית דלת","נשענים לאחור בגוף ישר. רגליים קרובות לעמוד = קל יותר","מושכים את החזה לכיוון הידיים ומקרבים שכמות"],v:[["orSy9wcO2RY","הדגמה"]]},
+  row_high:{name:"חתירה הפוכה על מוט גבוה",type:"reps",park:true,home:"band_row",cues:["מוט בגובה החזה. הגוף כמעט עומד, העקבים על הקרקע","גוף ישר מהראש עד העקבים","מושכים את החזה למוט, מחזיקים שנייה ויורדים לאט"],v:[["GrXI1dkMKBE","חתירה הפוכה ראשונה, צעד אחר צעד"],["cEvMu6RYSwc","הדגמה מפורטת"]]},
+  row_mid:{name:"חתירה הפוכה על מוט בגובה המותניים",type:"reps",park:true,home:"band_row",cues:["מוט בגובה המותניים. הגוף נוטה יותר לאחור","גוף ישר, עקבים על הקרקע","מושכים את החזה למוט ויורדים לאט"],v:[["cEvMu6RYSwc","הדגמה"],["GrXI1dkMKBE","סרטון קצר"]]},
+  row_low:{name:"חתירה הפוכה על מוט נמוך",type:"reps",park:true,home:"band_row",cues:["מוט בגובה הירכיים. אם קשה, כופפים את הברכיים","גוף ישר, לא מורידים את האגן","מושכים את החזה למוט ויורדים לאט"],v:[["cEvMu6RYSwc","הדגמה"]]},
+  hang_assist:{name:"תלייה בסיוע רגליים",type:"hold",park:true,home:"band_row",cues:["מוט שאפשר לעמוד מתחתיו כשהרגליים על הקרקע","אחיזה מלאה, ידיים ישרות. מעבירים משקל לידיים בהדרגה","לא קופצים ולא משחררים בבת אחת. יורדים לרגליים"],v:[["yUWQ6qj0duw","הדגמה"]]},
+  hang:{name:"תלייה חופשית",type:"hold",park:true,home:"band_row",cues:["עולים בעזרת ספסל ויורדים בעזרתו. לא קופצים","אחיזה ברוחב הכתפיים, כתפיים מעט מכווצות ולא רפויות לגמרי","מפסיקים לפני שהאחיזה נכשלת"],v:[["OT-wTpxP9uo","יסודות התלייה"]]},
+  scap:{name:"משיכות שכמות בתלייה",type:"reps",park:true,home:"band_row",cues:["תלייה עם ידיים ישרות. מותר להשאיר רגליים על הקרקע לסיוע","מושכים את השכמות למטה ולאחור, והגוף עולה כמה סנטימטרים","הידיים נשארות ישרות. חוזרים לאט"],v:[["8FWdmFBUNP0","הדגמה למתחילים"]]},
+  band_pull:{name:"מתח בעזרת גומייה",type:"reps",park:true,band:true,home:"band_row",noBand:"row_low",cues:["גומייה קשורה למוט, כף רגל או ברך בתוך הלולאה","מושכים עד שהסנטר מעל המוט, יורדים לאט עד ידיים ישרות","יוצאים מהגומייה בזהירות, בעזרת ספסל"],v:[["567NlAKVcqI","סרטון קצר"]]},
+  negative:{name:"מתח שלילי (ירידה איטית)",type:"reps",park:true,home:"band_row",tempo:9,cues:["עולים לעמדה העליונה (סנטר מעל המוט) בעזרת ספסל","יורדים לאט, 4–5 שניות, עד ידיים ישרות","חוזרים לספסל. לא קופצים למעלה"],v:[["yT5AnS9OwAw","הדגמה למתחילים"]]}
+};
+
+/* steps: [שלב 1, שלב 2, שלב 3] - reps (per side if side) or seconds */
+const LEVELS = [
+ {n:1,name:"יסודות",where:"בבית",rounds:2,rest:10,warm:60,
+  items:[["wall_pu",[6,8,10]],["sit_hands",[6,8,10]],["band_row",[8,10,12]],["incl_plank",[15,20,25]]],
+  test:[["wall_pu",15],["sit_hands",12],["band_row",15],["incl_plank",30]]},
+ {n:2,name:"בסיס",where:"בבית",rounds:2,rest:15,warm:90,
+  items:[["incline_pu",[6,8,10]],["sit_stand",[8,10,12]],["band_row",[10,12,14]],["bridge",[8,10,12]],["incl_plank",[20,25,30]]],
+  test:[["incline_pu",15],["sit_stand",15],["band_row",20],["bridge",15],["incl_plank",45]]},
+ {n:3,name:"יציאה לגינה",where:"בגינה",rounds:3,rest:20,warm:120,
+  items:[["bar_pu",[6,7,8]],["row_high",[6,7,8]],["box_squat",[8,10,12]],["hang_assist",[15,20,20]],["knee_plank",[15,20,25]],["calf",[10,12,12]]],
+  test:[["bar_pu",15],["row_high",12],["box_squat",15],["hang_assist",30],["knee_plank",45]]},
+ {n:4,name:"חיזוק",where:"בגינה",rounds:3,rest:25,warm:120,
+  items:[["knee_pu",[6,7,8]],["row_mid",[6,7,8]],["squat",[8,10,12]],["split",[5,6,8]],["scap",[5,6,6]],["bird_dog",[5,6,6]],["plank",[15,20,25]]],
+  test:[["knee_pu",15],["row_mid",12],["squat",20],["split",10],["scap",8],["plank",30]]},
+ {n:5,name:"כוח",where:"בגינה",rounds:3,rest:30,warm:150,
+  items:[["pushup",[3,4,5]],["row_low",[6,7,8]],["band_pull",[3,4,5]],["split",[8,9,10]],["calf",[12,14,15]],["hang",[15,20,20]],["plank",[25,30,35]]],
+  test:[["pushup",8],["row_low",10],["band_pull",6],["split",12],["hang",30],["plank",45]]},
+ {n:6,name:"שליטה",where:"בגינה",rounds:3,rest:30,warm:150,
+  items:[["pushup",[5,6,8]],["negative",[2,3,3]],["band_pull",[4,5,6]],["row_low",[8,9,10]],["split",[10,10,12]],["squat",[12,14,15]],["plank",[30,35,40]]],
+  test:[["pushup",15],["negative",5],["band_pull",10],["row_low",15],["plank",60],["hang",45]]}
+];
+const STEP_SESSIONS = 2;   // אימונים מוצלחים הנדרשים בכל שלב
+const RETRY_SESSIONS = 3;  // אימונים לפני ניסיון חוזר במבחן
+const REP_SEC = 4;         // קצב: 2 שניות למעלה, 2 למטה
+const WARMUP = [["צעידה במקום והנפת ידיים","מעלים ברכיים בנוחות"],["סיבובי כתפיים וזרועות","קדימה ואחורה, בתנועה רחבה ורגועה"],["כיפוף אגן ורבע סקוואט","ירידה קטנה ונוחה, להכנת הברכיים והירכיים"]];
+const EASE = [["קל מדי","יכולתי לעשות עוד הרבה"],["מאתגר אבל בשליטה","הטכניקה נשמרה עד הסוף"],["קשה מאוד","הטכניקה נפגעה או נאבקתי"]];
+const PAIN = [["אין כאב",""],["אי נוחות קלה שחלפה","עד 3 מ-10, נעלמה אחרי האימון"],["כאב במפרק או בשריר","כאב חד, או כאב שנשאר אחרי האימון"]];
+const HEB_DAYS = ["א","ב","ג","ד","ה","ו","ש"];
+
+/* ============ PURE LOGIC ============ */
+function exFor(id, place, bands){
+  let e = EX[id], cur = id;
+  if (e.park && place === "home" && e.home) cur = e.home;
+  if (EX[cur].band && !bands && EX[cur].noBand) cur = EX[cur].noBand;
+  if (EX[cur].park && place === "home" && EX[cur].home) cur = EX[cur].home;
+  return cur;
+}
+function workSec(id, amt){
+  const e = EX[id];
+  const per = e.type === "hold" ? amt : amt * (e.tempo || REP_SEC);
+  return e.side ? per * 2 : per;
+}
+function buildSession(level, step, place, bands){
+  const L = LEVELS[level-1];
+  const list = [];
+  for (let r = 1; r <= L.rounds; r++){
+    L.items.forEach(([id, steps], i) => {
+      const use = exFor(id, place, bands);
+      let amt = steps[step-1];
+      if (EX[id].type === "hold" && EX[use].type === "reps") amt = Math.round(amt/2); // תחליף ביתי לתרגיל החזקה
+      list.push({id:use, orig:id, amt, round:r, idx:i+1, of:L.items.length});
+    });
+  }
+  return list;
+}
+function estimateSec(level, step, place, bands){
+  const L = LEVELS[level-1];
+  const list = buildSession(level, step, place, bands);
+  let t = L.warm;
+  list.forEach((x, i) => { t += workSec(x.id, x.amt) + (i < list.length-1 ? L.rest : 0); });
+  return t;
+}
+function amtLabel(id, amt){
+  const e = EX[id];
+  const base = e.type === "hold" ? amt + " שניות" : amt + " חזרות";
+  return e.side ? base + " לכל צד" : base;
+}
+function dayKey(d){ const x = new Date(d); return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"); }
+function daysBetween(a, b){ const A = new Date(dayKey(a)+"T12:00:00"), B = new Date(dayKey(b)+"T12:00:00"); return Math.round((B-A)/86400000); }
+function weekStart(d){ const x = new Date(dayKey(d)+"T12:00:00"); x.setDate(x.getDate()-x.getDay()); return x; }
+
+/* apply a finished session's feedback to progression state; returns {state, msg} */
+function applySession(s, sess){
+  s = structuredClone(s);
+  s.sessions.push(sess);
+  let msg;
+  if (sess.pain === 2){
+    msg = {kind:"bad", text:"דיווחת על כאב. האימון לא נספר להתקדמות. אם הכאב נמשך יותר מ-48 שעות, או חוזר באותו מקום, פנה לרופא או לפיזיותרפיסט לפני האימון הבא. אפשר גם לרדת שלב במסך הבית."};
+  } else if (sess.ease === 2){
+    msg = {kind:"warn", text:"האימון היה קשה מאוד, ולכן נשארים באותו שלב. זה בסדר ונורמלי: חוזרים על אותו אימון עד שהוא מרגיש בשליטה."};
+  } else {
+    const credit = sess.ease === 0 ? STEP_SESSIONS : 1;
+    s.stepCount += credit;
+    if (s.retryLeft > 0) s.retryLeft = Math.max(0, s.retryLeft - 1);
+    if (s.stepCount >= STEP_SESSIONS && s.step < 3){
+      s.step += 1; s.stepCount = 0;
+      msg = {kind:"info", text:"מצוין! עברת לשלב " + s.step + " מתוך 3 ברמה " + s.level + "."};
+    } else if (s.stepCount >= STEP_SESSIONS && s.step === 3){
+      s.stepCount = STEP_SESSIONS;
+      msg = {kind:"info", text: s.level === 6 && s.finished ? "אימון שימור נרשם." : (s.retryLeft > 0 ? "האימון נספר. עוד " + s.retryLeft + " אימונים עד ניסיון חוזר במבחן." : "סיימת את שלבי הרמה. מבחן המעבר פתוח במסך הבית.")};
+    } else {
+      msg = {kind:"info", text:"האימון נספר. עוד " + (STEP_SESSIONS - s.stepCount) + " אימון מוצלח כדי לעבור לשלב הבא."};
+    }
+  }
+  s.updatedAt = Date.now();
+  return {state:s, msg};
+}
+function testOpen(s){ return s.step === 3 && s.stepCount >= STEP_SESSIONS && !(s.retryLeft > 0) && !(s.level === 6 && s.finished); }
+function judgeTest(level, results, checksAll){
+  const T = LEVELS[level-1].test;
+  const per = T.map(([id, target]) => ({id, target, got:Number(results[id]||0), ok:Number(results[id]||0) >= target}));
+  return {per, passed: checksAll && per.every(p => p.ok)};
+}
+function applyTest(s, level, results, checksAll){
+  s = structuredClone(s);
+  const j = judgeTest(level, results, checksAll);
+  s.tests.push({d:new Date().toISOString(), lv:level, results, checks:checksAll, passed:j.passed});
+  if (j.passed){
+    if (level < 6){ s.level = level + 1; s.step = 1; s.stepCount = 0; s.retryLeft = 0; }
+    else { s.finished = true; }
+  } else {
+    s.retryLeft = RETRY_SESSIONS;
+  }
+  s.updatedAt = Date.now();
+  return {state:s, judge:j};
+}
+function freshState(){ return {app:"calisthenics50", v:1, updatedAt:0, level:1, step:1, stepCount:0, retryLeft:0, finished:false, settings:{bands:true, place:"home"}, sessions:[], tests:[]}; }
+function validState(o){
+  return o && typeof o === "object" && o.app === "calisthenics50" && Number.isInteger(o.level) && o.level>=1 && o.level<=6 &&
+    Number.isInteger(o.step) && o.step>=1 && o.step<=3 && Array.isArray(o.sessions) && Array.isArray(o.tests) && o.settings && typeof o.settings === "object";
+}
+
+/* ============ STORAGE ============ */
+const LS_KEY = "calisthenics50.state";
+let S = freshState();
+try { const raw = localStorage.getItem(LS_KEY); if (raw){ const o = JSON.parse(raw); if (validState(o)) S = o; } } catch(e){}
+let remote = null, writing = false, pendingWrite = false;
+function setSync(t){ document.getElementById("sync").textContent = t; }
+function save(){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
+  pushRemote();
+}
+async function pushRemote(){
+  if (!remote) return;
+  if (writing){ pendingWrite = true; return; }
+  writing = true;
+  try { await remote.set(JSON.parse(JSON.stringify(S))); setSync("נשמר בחשבון"); }
+  catch(e){ setSync("נשמר במכשיר בלבד"); }
+  writing = false;
+  if (pendingWrite){ pendingWrite = false; pushRemote(); }
+}
+async function connectRemote(){
+  if (!window.claude || typeof window.claude.use !== "function") return;
+  try {
+    const [db, user] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+    if (!db || !user) return;
+    const uid = await user.id();
+    if (!uid) return;
+    const ref = db.doc("data/users/" + uid + "/app");
+    const timer = setTimeout(() => setSync("החשבון לא זמין כרגע. נשמר במכשיר"), 10000);
+    const snap = await ref.get();
+    clearTimeout(timer);
+    remote = ref;
+    if (snap.exists){
+      const o = snap.data();
+      if (validState(o) && (o.updatedAt||0) > (S.updatedAt||0)){
+        S = structuredClone(o);
+        try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch(e){}
+        render();
+        setSync("נשמר בחשבון");
+        return;
+      }
+    }
+    if (S.updatedAt) await pushRemote(); else setSync("נשמר בחשבון");
+  } catch(e){ setSync("נשמר במכשיר"); }
+}
+
+/* ============ UI HELPERS ============ */
+const $ = sel => document.querySelector(sel);
+function h(html){ const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content; }
+function esc(s){ return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function vids(id){ return EX[id].v.map(([vid, label]) => `<a class="vid" href="${YT(vid)}" target="_blank" rel="noopener">▶ ${esc(label)}</a>`).join(" · "); }
+function mins(sec){ return Math.round(sec/60); }
+function fmtClock(sec){ sec = Math.max(0, Math.ceil(sec)); return Math.floor(sec/60) + ":" + String(sec%60).padStart(2,"0"); }
+function fmtDate(iso){ const d = new Date(iso); return d.getDate()+"."+(d.getMonth()+1)+"."+String(d.getFullYear()).slice(2); }
+let audioCtx = null;
+function beep(n=1){
+  try {
+    audioCtx = audioCtx || new (window.AudioContext||window.webkitAudioContext)();
+    for (let i=0;i<n;i++){
+      const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+      o.frequency.value = 880; o.connect(g); g.connect(audioCtx.destination);
+      const t0 = audioCtx.currentTime + i*0.25;
+      g.gain.setValueAtTime(0.2, t0); g.gain.exponentialRampToValueAtTime(0.001, t0+0.18);
+      o.start(t0); o.stop(t0+0.2);
+    }
+  } catch(e){}
+  try { navigator.vibrate && navigator.vibrate(200); } catch(e){}
+}
+
+let tab = "home", flash = null, player = null, testDraft = null;
+document.getElementById("tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[data-tab]"); if (!b) return;
+  testDraft = null; tab = b.dataset.tab; render(); window.scrollTo(0,0);
+});
+function setTabs(){ document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab===tab && !player && !testDraft ? "page" : "false")); document.getElementById("tabs").classList.toggle("hidden", !!player); }
+
+function render(){
+  setTabs();
+  const v = $("#view"); v.innerHTML = "";
+  if (player) return renderPlayer(v);
+  if (testDraft) return renderTest(v);
+  ({home:renderHome, plan:renderPlan, log:renderLog, safety:renderSafety, backup:renderBackup})[tab](v);
+}
+
+/* ============ HOME ============ */
+function lastSession(){ return S.sessions[S.sessions.length-1]; }
+function renderHome(v){
+  const L = LEVELS[S.level-1];
+  const place = L.n >= 3 ? S.settings.place : "home";
+  const est = estimateSec(S.level, S.step, place, S.settings.bands);
+  const last = lastSession();
+  const gap = last ? daysBetween(last.d, new Date()) : null;
+  const open = testOpen(S);
+  const done = (S.step-1)*STEP_SESSIONS + Math.min(S.stepCount, STEP_SESSIONS);
+  const pct = Math.round(done / (3*STEP_SESSIONS) * 100);
+  const ws = weekStart(new Date());
+  const thisWeek = S.sessions.filter(x => weekStart(x.d).getTime() === ws.getTime());
+  const doneDays = new Set(thisWeek.map(x => new Date(x.d).getDay()));
+  const today = new Date().getDay();
+  let html = "";
+  if (flash){ html += `<div class="banner ${flash.kind}" role="status">${esc(flash.text)}</div>`; flash = null; }
+  if (S.sessions.length === 0){
+    html += `<div class="banner info"><b>לפני האימון הראשון:</b> אם עברו יותר משנה מאז בדיקה אצל רופא המשפחה, או שיש לך לחץ דם, סוכרת, בעיית לב או כאבים במפרקים, עדיף לקבל אישור רפואי לפני שמתחילים. עבור גם על מסך "בטיחות".</div>`;
+  }
+  html += `<section class="card hero">
+    <div class="row between"><span class="pill">רמה ${L.n} מתוך 6 · ${esc(L.name)}</span><span class="pill">${S.level===6&&S.finished?"שימור":"שלב "+S.step+" מתוך 3"}</span></div>
+    <h2>האימון הבא: כ-${mins(est)} דקות ${L.n>=3 ? (place==="park"?"בגינה":"בבית") : "בבית"}</h2>
+    <div><div class="bar" aria-label="התקדמות ברמה"><i style="width:${pct}%"></i></div>
+    <p class="small muted" style="margin-top:6px">${open ? "סיימת את שלבי הרמה. מבחן המעבר פתוח." : (S.retryLeft>0 ? "עוד " + S.retryLeft + " אימונים מוצלחים עד ניסיון חוזר במבחן." : (S.level===6&&S.finished ? "סיימת את כל הרמות. ממשיכים באימוני שימור, 3 פעמים בשבוע." : "אימונים מוצלחים בשלב הנוכחי: " + Math.min(S.stepCount,STEP_SESSIONS) + " מתוך " + STEP_SESSIONS + "."))}</p></div>
+    ${L.n>=3 ? `<div><p class="small muted" style="margin-bottom:6px">איפה מתאמנים היום?</p><div class="seg" role="group" aria-label="מיקום"><button id="pl-park" aria-pressed="${place==="park"}">בגינת כושר</button><button id="pl-home" aria-pressed="${place==="home"}">בבית</button></div></div>` : ""}
+    ${gap===0 ? `<div class="banner warn">כבר התאמנת היום. השריר מתחזק במנוחה, אז האימון הבא מחר בערב או מחרתיים.</div>` : ""}
+    ${gap===1 ? `<div class="banner warn">התאמנת אתמול. מומלץ יום מנוחה בין אימונים, למשל ימים א', ג' ו-ה'.</div>` : ""}
+    <button class="primary big" id="start" ${gap===0?"disabled":""}>התחל אימון</button>
+    ${open ? `<button class="big" id="opentest">למבחן המעבר לרמה ${S.level<6?S.level+1:"הסיום"}</button>` : ""}
+  </section>`;
+  html += `<section class="card"><div class="row between"><h3>השבוע</h3><span class="pill ${thisWeek.length>=3?"good":""}">${thisWeek.length} מתוך 3 אימונים</span></div>
+    <div class="week">${HEB_DAYS.map((d,i)=>`<div class="d ${i===today?"today":""}"><span class="dot ${doneDays.has(i)?"done":""}"></span>${d}'</div>`).join("")}</div></section>`;
+  const list = buildSession(S.level, S.step, place, S.settings.bands).filter(x => x.round===1);
+  html += `<section class="card"><div class="row between"><h3>מה באימון</h3><span class="small muted">${L.rounds} סבבים · ${L.rest} שניות מנוחה בין תרגילים</span></div><div>
+    ${list.map(x=>`<div class="ex"><div><div class="t">${esc(EX[x.id].name)}</div><div>${vids(x.id)}</div></div><div class="amt">${esc(amtLabel(x.id,x.amt))}</div></div>`).join("")}</div>
+    ${S.step>1 ? `<button class="ghost" id="stepdown">ירידה לשלב ${S.step-1} (אם יש כאב או קושי)</button>` : ""}
+  </section>`;
+  v.append(h(html));
+  $("#start").onclick = () => startPlayer(place);
+  if ($("#opentest")) $("#opentest").onclick = () => { testDraft = {results:{}, checks:{}}; render(); window.scrollTo(0,0); };
+  if ($("#pl-park")){ $("#pl-park").onclick = () => { S.settings.place="park"; S.updatedAt=Date.now(); save(); render(); }; $("#pl-home").onclick = () => { S.settings.place="home"; S.updatedAt=Date.now(); save(); render(); }; }
+  if ($("#stepdown")) $("#stepdown").onclick = () => { S.step -= 1; S.stepCount = 0; S.updatedAt=Date.now(); save(); flash={kind:"info",text:"ירדת לשלב "+S.step+". זו החלטה נכונה כשמשהו כואב."}; render(); };
+}
+
+/* ============ PLAYER ============ */
+function startPlayer(place){
+  const L = LEVELS[S.level-1];
+  const steps = [];
+  const wEach = Math.round(L.warm / WARMUP.length);
+  WARMUP.forEach(([n, c], i) => steps.push({kind:"warm", name:n, cue:c, sec:wEach, i:i+1}));
+  const list = buildSession(S.level, S.step, place, S.settings.bands);
+  list.forEach((x, i) => {
+    steps.push({kind:"ex", ...x});
+    if (i < list.length-1) steps.push({kind:"rest", sec:L.rest, next:list[i+1]});
+  });
+  player = {steps, i:0, t0:Date.now(), place, timer:null, left:null, running:false, ease:null, pain:null, feedback:false};
+  render(); window.scrollTo(0,0);
+}
+function stopTimer(){ if (player && player.timer){ clearInterval(player.timer); player.timer=null; } }
+function runTimer(sec, onEnd){
+  stopTimer();
+  const end = Date.now() + sec*1000;
+  player.left = sec; player.running = true;
+  const tick = () => {
+    player.left = (end - Date.now())/1000;
+    const c = document.getElementById("clock"); if (c) c.textContent = fmtClock(player.left);
+    if (player.left <= 0){ stopTimer(); player.running=false; beep(2); onEnd(); }
+  };
+  player.timer = setInterval(tick, 250); tick();
+}
+function nextStep(){ stopTimer(); if (!player) return; player.running=false; player.left=null; player.i++; if (player.i >= player.steps.length) player.feedback = true; render(); }
+function renderPlayer(v){
+  if (player.feedback) return renderFeedback(v);
+  const st = player.steps[player.i];
+  const total = player.steps.filter(x=>x.kind==="ex").length;
+  const doneEx = player.steps.slice(0, player.i).filter(x=>x.kind==="ex").length;
+  let html = `<section class="card player">
+    <div class="row between"><span class="where">${st.kind==="warm" ? "חימום " + st.i + " מתוך " + WARMUP.length : st.kind==="rest" ? "מנוחה" : "סבב " + st.round + " מתוך " + LEVELS[S.level-1].rounds + " · תרגיל " + st.idx + " מתוך " + st.of}</span><span class="where">${doneEx} מתוך ${total} הושלמו</span></div>
+    <div class="bar"><i style="width:${Math.round(doneEx/total*100)}%"></i></div>`;
+  if (st.kind === "warm"){
+    html += `<h2 class="name">${esc(st.name)}</h2><p class="muted">${esc(st.cue)}</p>
+      <div class="clock" id="clock">${fmtClock(st.sec)}</div>
+      <button class="primary big" id="go">${player.running?"דלג":"התחל"}</button>`;
+  } else if (st.kind === "rest"){
+    html += `<div class="clock rest" id="clock">${fmtClock(st.sec)}</div>
+      <p class="muted" style="text-align:center">נושמים רגוע. הבא בתור:</p>
+      <h2 style="text-align:center">${esc(EX[st.next.id].name)} · ${esc(amtLabel(st.next.id, st.next.amt))}</h2>
+      <button class="primary big" id="go">דלג על המנוחה</button>`;
+  } else {
+    const e = EX[st.id];
+    html += `<h2 class="name">${esc(e.name)}</h2>
+      ${st.id!==st.orig ? `<p class="small muted">במקום "${esc(EX[st.orig].name)}"</p>` : ""}
+      <div class="target">${esc(amtLabel(st.id, st.amt))}</div>
+      <ul class="cues">${e.cues.map(c=>`<li>${esc(c)}</li>`).join("")}</ul>
+      <div>${vids(st.id)}</div>`;
+    if (e.type === "hold"){
+      html += `<div class="clock" id="clock">${fmtClock(player.left!=null?player.left:st.amt)}</div>
+        <button class="primary big" id="go">${player.running ? "סיימתי מוקדם" : "התחל ספירה"}</button>`;
+    } else {
+      html += `<button class="primary big" id="go">סיימתי</button>`;
+    }
+    html += `<p class="small muted">${e.side ? "עשה את כל החזרות בצד אחד, ואז בצד השני. " : ""}אם הטכניקה נשברת, עצור. עדיף לעשות פחות חזרות ונכון.</p>`;
+  }
+  html += `</section><button class="ghost" id="quit">הפסק את האימון</button>`;
+  v.append(h(html));
+  const go = $("#go");
+  if (st.kind === "warm"){
+    go.onclick = () => { if (player.running) return nextStep(); beep(1); runTimer(st.sec, nextStep); render(); };
+  } else if (st.kind === "rest"){
+    go.onclick = nextStep;
+    if (!player.running) runTimer(st.sec, nextStep);
+  } else if (EX[st.id].type === "hold"){
+    go.onclick = () => { if (player.running) return nextStep(); beep(1); runTimer(st.amt, nextStep); render(); };
+  } else {
+    go.onclick = nextStep;
+  }
+  $("#quit").onclick = () => {
+    const q = $("#quit");
+    if (q.dataset.sure){ stopTimer(); player = null; flash = {kind:"warn", text:"האימון הופסק ולא נשמר. אם הפסקת בגלל כאב, סחרחורת או לחץ בחזה, קרא את מסך הבטיחות."}; render(); }
+    else { q.dataset.sure = "1"; q.textContent = "בטוח? לחץ שוב כדי להפסיק בלי לשמור"; }
+  };
+}
+function renderFeedback(v){
+  const sec = Math.round((Date.now() - player.t0)/1000);
+  player.sec = sec;
+  const html = `<section class="card">
+    <h2>כל הכבוד, סיימת! (${fmtClock(sec)} דקות)</h2>
+    <h3>איך היה האימון?</h3>
+    <div class="choices" id="ease">${EASE.map(([t,d],i)=>`<button data-v="${i}" aria-pressed="${player.ease===i}">${esc(t)}<span class="small muted" style="margin-inline-start:auto;font-weight:400">${esc(d)}</span></button>`).join("")}</div>
+    <h3>כאב?</h3>
+    <div class="choices" id="pain">${PAIN.map(([t,d],i)=>`<button data-v="${i}" aria-pressed="${player.pain===i}">${esc(t)}<span class="small muted" style="margin-inline-start:auto;font-weight:400">${esc(d)}</span></button>`).join("")}</div>
+    <label for="note" class="small muted">הערה (לא חובה)</label>
+    <input id="note" type="text" maxlength="200" style="font:inherit;padding:10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)" value="${esc(player.note||"")}">
+    <button class="primary big" id="savefb" ${player.ease==null||player.pain==null?"disabled":""}>שמור אימון</button>
+  </section>`;
+  v.append(h(html));
+  $("#note").oninput = e => player.note = e.target.value;
+  $("#ease").onclick = e => { const b=e.target.closest("button"); if(!b) return; player.ease=+b.dataset.v; render(); };
+  $("#pain").onclick = e => { const b=e.target.closest("button"); if(!b) return; player.pain=+b.dataset.v; render(); };
+  $("#savefb").onclick = () => {
+    const sess = {d:new Date().toISOString(), lv:S.level, st:S.step, ease:player.ease, pain:player.pain, sec:player.sec, place:player.place, note:(player.note||"").slice(0,200)};
+    const r = applySession(S, sess);
+    S = r.state; flash = r.msg; player = null; tab = "home"; save(); render(); window.scrollTo(0,0);
+  };
+}
+
+/* ============ TEST ============ */
+const TEST_CHECKS = [
+  "התאמנתי יום אחרי יום מנוחה, וחיממתי לפני המבחן",
+  "כל חזרה שספרתי נעשתה בטכניקה המלאה שבסרטון ובטווח התנועה המלא",
+  "לא היה כאב במפרקים במהלך המבחן",
+  "נשמתי לאורך כל התרגילים ולא עצרתי נשימה"
+];
+function renderTest(v){
+  const L = LEVELS[S.level-1];
+  const place = "park";
+  let html = `<section class="card"><h2>מבחן מעבר: רמה ${L.n} ${L.n<6?"← רמה "+(L.n+1):"(מבחן סיום)"}</h2>
+    <p>מבצעים כל תרגיל פעם אחת, כמה שיותר חזרות או שניות בטכניקה נקייה, עם 2–3 דקות מנוחה בין תרגילים. רושמים את התוצאה האמיתית. המבחן הוא בשבילך, אז תהיה כן עם עצמך.</p>
+    ${L.n>=3 ? `<p class="small muted">את המבחן ברמה הזו עושים בגינת כושר, על המתקנים שברשימה.</p>` : ""}
+    <div>${L.test.map(([id,target])=>{ const use = exFor(id, L.n>=3?place:"home", S.settings.bands); return `<div class="testrow"><div><div style="font-weight:700">${esc(EX[use].name)}</div><div class="small muted">רף: ${esc(amtLabel(use,target))}</div><div>${vids(use)}</div></div>
+      <input type="number" inputmode="numeric" min="0" max="999" id="t-${id}" aria-label="תוצאה: ${esc(EX[use].name)}" value="${testDraft.results[id]??""}"></div>`; }).join("")}</div>
+    <h3>אישור עצמי</h3>
+    ${TEST_CHECKS.map((c,i)=>`<label class="check"><input type="checkbox" id="c-${i}" ${testDraft.checks[i]?"checked":""}><span>${esc(c)}</span></label>`).join("")}
+    <button class="primary big" id="submit">אני מאשר. בדוק את התוצאות</button>
+    <button class="ghost" id="cancel">חזרה, אעשה את המבחן בפעם אחרת</button>
+  </section>`;
+  v.append(h(html));
+  L.test.forEach(([id]) => $("#t-"+id).oninput = e => testDraft.results[id] = e.target.value);
+  TEST_CHECKS.forEach((c,i) => $("#c-"+i).onchange = e => testDraft.checks[i] = e.target.checked);
+  $("#cancel").onclick = () => { testDraft = null; render(); };
+  $("#submit").onclick = () => {
+    const results = {}; L.test.forEach(([id]) => results[id] = Math.max(0, parseInt(testDraft.results[id]||"0",10)||0));
+    const checksAll = TEST_CHECKS.every((c,i)=>testDraft.checks[i]);
+    const r = applyTest(S, L.n, results, checksAll);
+    S = r.state; save();
+    const miss = r.judge.per.filter(p=>!p.ok).map(p=>EX[exFor(p.id, L.n>=3?"park":"home", S.settings.bands)].name);
+    if (r.judge.passed){
+      flash = {kind:"info", text: L.n<6 ? "עברת את המבחן! נפתחה רמה " + (L.n+1) + ": " + LEVELS[L.n].name + ". מתחילים משלב 1." : "עברת את מבחן הסיום! ממשיכים באימוני שימור ברמה 6, 3 פעמים בשבוע."};
+    } else if (!checksAll){
+      flash = {kind:"warn", text:"לא סימנת את כל סעיפי האישור העצמי, ולכן המבחן לא נחשב כמעבר. ממשיכים עוד " + RETRY_SESSIONS + " אימונים בשלב 3 ומנסים שוב."};
+    } else {
+      flash = {kind:"warn", text:"עדיין לא עמדת ברף ב: " + miss.join(", ") + ". זה חלק רגיל מהתהליך. עוד " + RETRY_SESSIONS + " אימונים בשלב 3, ואז ניסיון חוזר."};
+    }
+    testDraft = null; tab = "home"; render(); window.scrollTo(0,0);
+  };
+}
+
+/* ============ PLAN ============ */
+function renderPlan(v){
+  let html = `<section class="card"><h2>איך התוכנית עובדת</h2>
+    <ul class="cues">
+      <li><b>3 אימונים בשבוע</b>, עם יום מנוחה ביניהם (למשל א', ג', ה').</li>
+      <li><b>6 רמות.</b> אימון של כ-5 דקות ברמה 1, ועד 30 דקות לכל היותר ברמה 6.</li>
+      <li><b>3 שלבים בכל רמה.</b> עוברים שלב אחרי ${STEP_SESSIONS} אימונים מוצלחים, כלומר "מאתגר אבל בשליטה" ובלי כאב. אימון "קל מדי" מקדם שלב מיד. אימון "קשה מאוד" לא נספר, וחוזרים עליו.</li>
+      <li><b>מבחן מעבר</b> נפתח אחרי שלב 3. ממלאים תוצאות ומאשרים בעצמך שהטכניקה נשמרה. אם לא עברת, עושים עוד ${RETRY_SESSIONS} אימונים ומנסים שוב.</li>
+      <li><b>מרמה 3</b> חלק מהתרגילים בגינת כושר (מוט מתח ומקבילים). ביום שמתאמנים בבית, האפליקציה מחליפה אותם בתרגילים ביתיים.</li>
+      <li><b>הקצב:</b> 2 שניות למעלה ו-2 שניות למטה, ונשימה רציפה. נושפים במאמץ.</li>
+      <li>מינימום של כ-12 שבועות לכל התוכנית. רוב המתחילים יעברו אותה ב-4 עד 6 חודשים, וזה הקצב הנכון.</li>
+    </ul>
+    <div class="row"><span class="small muted">יש לי גומיות התנגדות:</span><div class="seg" role="group" aria-label="גומיות"><button id="b-yes" aria-pressed="${S.settings.bands}">כן</button><button id="b-no" aria-pressed="${!S.settings.bands}">לא</button></div></div>
+  </section>`;
+  LEVELS.forEach(L => {
+    const e1 = mins(estimateSec(L.n,1,"park",S.settings.bands)), e3 = mins(estimateSec(L.n,3,"park",S.settings.bands));
+    html += `<details class="card" ${L.n===S.level?"open":""}><summary>רמה ${L.n}: ${esc(L.name)} · ${e1===e3?e1:e1+"–"+e3} דק' · ${esc(L.where)} ${L.n===S.level?'<span class="pill">אתה כאן</span>':""}</summary>
+      <p class="small muted">${L.rounds} סבבים · ${L.rest} שניות מנוחה · חימום ${Math.round(L.warm/60*10)/10} דק'</p>
+      <div class="tablewrap"><table><thead><tr><th>תרגיל</th><th>שלב 1</th><th>שלב 2</th><th>שלב 3</th></tr></thead><tbody>
+      ${L.items.map(([id,st])=>{ const use=exFor(id,"park",S.settings.bands); return `<tr><td><b>${esc(EX[use].name)}</b>${EX[use].side?' <span class="small muted">(לכל צד)</span>':""}<br>${vids(use)}${EX[id].home?`<br><span class="small muted">בבית: ${esc(EX[exFor(id,"home",S.settings.bands)].name)}</span>`:""}</td>${st.map(a=>`<td class="num">${a}${EX[use].type==="hold"?" שנ'":""}</td>`).join("")}</tr>`; }).join("")}
+      </tbody></table></div>
+      <h3>מבחן מעבר</h3>
+      <ul class="clean">${L.test.map(([id,t])=>{ const use=exFor(id,L.n>=3?"park":"home",S.settings.bands); return `<li class="row between"><span>${esc(EX[use].name)}</span><b class="num">${esc(amtLabel(use,t))}</b></li>`; }).join("")}</ul>
+    </details>`;
+  });
+  html += `<section class="card"><h2>מקורות</h2><ul class="cues small">
+    <li><a href="https://cdc.gov/physical-activity-basics/guidelines/older-adults.html" target="_blank" rel="noopener">CDC: המלצות פעילות גופנית למבוגרים</a>. חיזוק שרירים לפחות פעמיים בשבוע, לכל קבוצות השרירים העיקריות.</li>
+    <li><a href="https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/" target="_blank" rel="noopener">NHS: תרגילי כוח לגיל המבוגר</a>. שכיבות סמיכה על קיר, קימה מכיסא, עליות על קצות האצבעות.</li>
+    <li><a href="https://www.ksre.ksu.edu/humannutrition/nutrition-topics/older-adults/olderadults-documents/workout-to-go.pdf" target="_blank" rel="noopener">NIA Go4Life: Workout to Go</a>. תוכנית תרגול ביתית של המכון האמריקאי לחקר ההזדקנות (PDF).</li>
+    <li><a href="https://sfu.ca/~ryand/kin343/ACSMresistance.pdf" target="_blank" rel="noopener">ACSM: התקדמות באימוני התנגדות (Position Stand)</a>. העקרונות של התקדמות הדרגתית ושל הגדלת עומס מבוקרת (PDF).</li>
+    <li><a href="https://blog.aginglifecare.org/blog/stay-safe-while-exercising-go4life/" target="_blank" rel="noopener">Go4Life: בטיחות באימון</a>. סימנים שמחייבים להפסיק אימון.</li>
+  </ul></section>`;
+  v.append(h(html));
+  $("#b-yes").onclick = () => { S.settings.bands = true; S.updatedAt=Date.now(); save(); render(); };
+  $("#b-no").onclick = () => { S.settings.bands = false; S.updatedAt=Date.now(); save(); render(); };
+}
+
+/* ============ LOG ============ */
+function renderLog(v){
+  const ses = S.sessions;
+  const totalMin = Math.round(ses.reduce((a,x)=>a+(x.sec||0),0)/60);
+  // last 12 weeks
+  const ws0 = weekStart(new Date());
+  const weeks = [];
+  for (let i=11;i>=0;i--){ const w = new Date(ws0); w.setDate(w.getDate()-7*i); weeks.push({w, n:0}); }
+  ses.forEach(x => { const t = weekStart(x.d).getTime(); const k = weeks.find(y=>y.w.getTime()===t); if (k) k.n++; });
+  const W=320,H=140,pad=24,bw=(W-pad)/12;
+  const maxN = 4, y = n => H-20 - (n/maxN)*(H-34);
+  let bars = "";
+  weeks.forEach((k,i)=>{ const x = pad + i*bw + 3; const hgt = Math.max(0,(H-20)-y(Math.min(k.n,maxN))); bars += `<rect x="${x}" y="${y(Math.min(k.n,maxN))}" width="${bw-6}" height="${hgt}" rx="3" fill="var(--accent)" opacity="${i===11?1:.65}"/>`; if (i%2===1||i===11) bars += `<text x="${x+(bw-6)/2}" y="${H-5}" text-anchor="middle">${k.w.getDate()}.${k.w.getMonth()+1}</text>`; });
+  const grid = [0,1,2,3].map(n=>`<line x1="${pad}" x2="${W}" y1="${y(n)}" y2="${y(n)}" stroke="var(--line)" stroke-dasharray="${n===3?"4 3":"0"}"/><text x="${pad-6}" y="${y(n)+4}" text-anchor="end">${n}</text>`).join("");
+  let html = `<section class="card"><h2>סיכום</h2>
+    <div class="row between"><span>אימונים שהושלמו</span><b class="num">${ses.length}</b></div>
+    <div class="row between"><span>זמן אימון מצטבר</span><b class="num">${totalMin} דקות</b></div>
+    <div class="row between"><span>מבחנים שעברת</span><b class="num">${S.tests.filter(t=>t.passed).length} מתוך 6</b></div>
+  </section>
+  <section class="card chart"><h3>אימונים בשבוע (12 שבועות אחרונים, היעד הוא 3)</h3>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="מספר אימונים בכל שבוע">${grid}${bars}</svg></section>`;
+  html += `<section class="card"><h3>מבחנים</h3>${S.tests.length? `<div class="tablewrap"><table><thead><tr><th>תאריך</th><th>רמה</th><th>תוצאות</th><th>תוצאה</th></tr></thead><tbody>${S.tests.slice().reverse().map(t=>`<tr><td class="num">${fmtDate(t.d)}</td><td class="num">${t.lv}</td><td class="small">${LEVELS[t.lv-1].test.map(([id,target])=>`${esc(EX[id].name)}: ${t.results[id]??0}/${target}`).join("<br>")}</td><td><span class="pill ${t.passed?"good":"warn"}">${t.passed?"עבר":"עוד לא"}</span></td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">עוד לא נעשו מבחנים. המבחן הראשון נפתח אחרי כשבועיים של אימונים.</p>`}</section>`;
+  html += `<section class="card"><h3>יומן אימונים</h3>${ses.length ? `<div class="tablewrap"><table><thead><tr><th>תאריך</th><th>רמה·שלב</th><th>זמן</th><th>תחושה</th><th>כאב</th></tr></thead><tbody>${ses.slice().reverse().slice(0,60).map(x=>`<tr><td class="num">${fmtDate(x.d)}</td><td class="num">${x.lv}·${x.st}</td><td class="num">${fmtClock(x.sec||0)}</td><td>${["קל","בשליטה","קשה"][x.ease]}</td><td>${x.pain===0?"—":`<span class="pill ${x.pain===2?"bad":"warn"}">${x.pain===2?"כאב":"קל"}</span>`}${x.note?`<div class="small muted">${esc(x.note)}</div>`:""}</td></tr>`).join("")}</tbody></table></div>` : `<p class="muted">עוד אין אימונים. האימון הראשון לוקח 5 דקות.</p>`}</section>`;
+  v.append(h(html));
+}
+
+/* ============ SAFETY ============ */
+function renderSafety(v){
+  v.append(h(`<section class="card"><h2>עוצרים מיד ופונים לרופא אם מופיעים:</h2>
+    <ul class="cues">
+      <li>כאב או לחץ בחזה, בצוואר, בכתף או בזרוע</li>
+      <li>סחרחורת, בחילה או זיעה קרה</li>
+      <li>קוצר נשימה חריג, שלא עובר תוך כמה דקות מנוחה</li>
+      <li>כאב חד במפרק, בברך, בקרסול או בגב</li>
+    </ul>
+    <div class="banner bad">לחץ בחזה שלא עובר במנוחה הוא מצב חירום. מתקשרים למד"א: <b>101</b>.</div>
+  </section>
+  <section class="card"><h2>כללי האימון</h2>
+    <ul class="cues">
+      <li><b>נושמים.</b> לא עוצרים נשימה במאמץ. נושפים בדחיפה או במשיכה, ושואפים בחזרה. עצירת נשימה מעלה את לחץ הדם.</li>
+      <li><b>טכניקה לפני כמות.</b> כשהצורה נשברת, עוצרים. החזרות שנעשו בטכניקה נכונה הן אלה שנספרות.</li>
+      <li><b>כלל 24 השעות:</b> כאב שרירים קל יום-יומיים אחרי אימון הוא נורמלי. כאב במפרק, או כאב שמחמיר, הוא סימן לרדת שלב.</li>
+      <li><b>יום מנוחה בין אימונים.</b> הגידים והמפרקים מסתגלים לאט יותר מהשרירים, במיוחד אחרי גיל 50.</li>
+      <li><b>תלייה ומתח:</b> עולים ויורדים מהמוט בעזרת ספסל, ולא קופצים. מתחילים בתלייה בסיוע רגליים.</li>
+      <li><b>הפסקה של יותר משבועיים</b> (מחלה, חופשה): חוזרים שלב אחד אחורה בעזרת הכפתור "ירידה לשלב" במסך הבית.</li>
+    </ul>
+  </section>`));
+}
+
+/* ============ BACKUP ============ */
+function exportText(){ return JSON.stringify(S, null, 1); }
+async function doDownload(){
+  const name = "calisthenics50-backup-" + dayKey(new Date()) + ".json";
+  const data = exportText();
+  if (window.claude && typeof window.claude.use === "function"){
+    try {
+      const dl = await window.claude.use("downloads");
+      if (dl){ await dl.save({filename:name, data}); return "הקובץ נשמר."; }
+    } catch(e){ return "השמירה בוטלה או נכשלה. אפשר להשתמש בכפתור ההעתקה."; }
+  }
+  try {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([data], {type:"application/json"}));
+    a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    return "הקובץ ירד למכשיר.";
+  } catch(e){ return "ההורדה לא נתמכת כאן. השתמש בכפתור ההעתקה."; }
+}
+function importObj(o, out){
+  if (!validState(o)){ out.textContent = "הקובץ לא נראה כמו גיבוי של האפליקציה הזו. לא נטען דבר."; out.className = "banner bad"; return; }
+  o.updatedAt = Date.now(); S = o; save();
+  out.textContent = "הגיבוי נטען: " + S.sessions.length + " אימונים, רמה " + S.level + ", שלב " + S.step + "."; out.className = "banner info";
+}
+function renderBackup(v){
+  v.append(h(`<section class="card"><h2>ייצוא נתונים</h2>
+    <p>שמור קובץ גיבוי מדי פעם, ולפני מעבר לכתובת או למכשיר אחר. הקובץ כולל את כל האימונים, המבחנים והרמה הנוכחית.</p>
+    <div class="row"><button class="primary" id="dl">הורד קובץ גיבוי</button><button id="cp">העתק את הנתונים</button></div>
+    <div id="outx" class="hidden" role="status"></div>
+  </section>
+  <section class="card"><h2>ייבוא נתונים</h2>
+    <p>טעינת גיבוי מחליפה את הנתונים הנוכחיים במכשיר הזה.</p>
+    <label class="btn" for="file">בחר קובץ גיבוי</label>
+    <input type="file" id="file" accept=".json,application/json" class="hidden">
+    <label for="paste" class="small muted">או הדבק כאן טקסט שהועתק:</label>
+    <textarea id="paste" placeholder='{"app":"calisthenics50", ...}'></textarea>
+    <button id="imp">טען מהטקסט</button>
+    <div id="outi" class="hidden" role="status"></div>
+  </section>
+  <section class="card"><h3>איפוס</h3><p class="small muted">מחיקת כל הנתונים והתחלה מרמה 1. כדאי להוריד גיבוי לפני כן.</p><button class="ghost" id="reset">אפס הכול</button></section>`));
+  const outx = $("#outx"), outi = $("#outi");
+  const show = (el, t, k="info") => { el.textContent = t; el.className = "banner " + k; };
+  $("#dl").onclick = async () => show(outx, await doDownload());
+  $("#cp").onclick = async () => {
+    try { await navigator.clipboard.writeText(exportText()); show(outx, "הנתונים הועתקו. הדבק אותם בפתק או במייל לעצמך."); }
+    catch(e){ $("#paste").value = exportText(); show(outx, "ההעתקה האוטומטית לא זמינה. הנתונים הוצגו בתיבה למטה. סמן אותם והעתק ידנית.", "warn"); }
+  };
+  $("#file").onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    try { importObj(JSON.parse(await f.text()), outi); } catch(err){ show(outi, "לא הצלחתי לקרוא את הקובץ. ודא שבחרת קובץ גיבוי (JSON).", "bad"); }
+  };
+  $("#imp").onclick = () => { try { importObj(JSON.parse($("#paste").value), outi); } catch(err){ show(outi, "הטקסט לא תקין. הדבק את כל הטקסט שהועתק, מהסוגר הראשון ועד האחרון.", "bad"); } };
+  $("#reset").onclick = () => {
+    const b = $("#reset");
+    if (b.dataset.sure){ S = freshState(); S.updatedAt = Date.now(); save(); tab="home"; flash={kind:"info",text:"הנתונים אופסו. מתחילים מרמה 1."}; render(); }
+    else { b.dataset.sure = "1"; b.textContent = "בטוח? לחץ שוב כדי למחוק הכול"; }
+  };
+}
+
+window.__cal = {LEVELS, EX, estimateSec, buildSession, applySession, applyTest, testOpen, judgeTest, freshState, validState, exFor};
+render();
+connectRemote();
+</script>
+</body>
+</html>
